@@ -8,26 +8,24 @@
 <head>
     <meta charset="UTF-8">
     <title>PRISM</title>
-    <!-- test 2 -->
-    <!-- 좀되라 -->
-    <!-- branches 1,2,3,4,5 -->
-    <!-- asfasdfasdfasdf -->
-    <!-- git config pull rebase false \ -->>>
+    
     <script type="module">
         // Firebase SDK 라이브러리 가져오기
-        import {initializeApp} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import {getFirestore} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
         // Firebase 구성 정보 설정. JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
-            apiKey: "AIzaSyA0OXWG80hRqnzuEB5ytI1oxjdcHthYxoE",
-            authDomain: "sparta-a78a3.firebaseapp.com",
-            projectId: "sparta-a78a3",
-            storageBucket: "sparta-a78a3.firebasestorage.app",
-            messagingSenderId: "692256143426",
-            appId: "1:692256143426:web:a279269d0bca7c94b515db",
-            measurementId: "G-PKVDT9GBHF",
-        };
+            apiKey: "AIzaSyA-m6D6FvQXAUcTMeNwXSqQjCFn9T9N3C0",
+            authDomain: "sparta-ce992.firebaseapp.com",
+            projectId: "sparta-ce992",
+            storageBucket: "sparta-ce992.firebasestorage.app",
+            messagingSenderId: "215849547825",
+            appId: "1:215849547825:web:8b967e108e738d1d10bd10",
+            measurementId: "G-7J07E75R0B"
+        }
 
         // Firebase 인스턴스 초기화
         const app = initializeApp(firebaseConfig);
