@@ -1,10 +1,97 @@
-<html lang="en">
+<html lang="KR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
+<link rel="stylesheet" href="./src/reset.css">
+<style>
+  .loading_box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  .loading_box.off{
+    display:none;
+  }
+  .loading_bar {
+    width: 300px;
+    height: 40px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    box-sizing:border-box;
+  }
+  .border{
+    width: 100%;
+    height: 20px;
+        border: 2px solid #fff;
+            box-sizing:border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .red_bar {
+    width: 0;
+    height: 100%;
+    position: absolute;
+    background-color: #c3220f;
+    animation: loadingAnimation 2s linear forwards;
+  }
+  @keyframes loadingAnimation {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+  .number{
+    position:absolute;
+    left:50%;
+    bottom:0;
+    width:100%;
+    margin-left:-150px;
+    color:#fff;
+    text-align:center;
+  }
+</style>
 <body>
-  
+  <div class="loading_box">
+    <div class="loading_bar">
+      <div class="border">
+        <div class="red_bar"></div>
+      </div>
+      <div class="number"></div>
+    </div>
+  </div>
+  <section>
+    
+  </section>
 </body>
+<script>
+  window.addEventListener('load', function() {
+    const loadingBox = document.querySelector('.loading_box');
+    const number = document.querySelector('.number');
+    for(let i =1;i<=100;i++){
+      setTimeout(function() {
+        number.innerText = i + '%';
+        if(i===100){
+          setTimeout(function(){
+            loadingBox.classList.add('off');  
+          },20);
+        }
+      }, i*20); 
+    }
+  });
+</script>
 </html>
