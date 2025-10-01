@@ -5,188 +5,186 @@
     <title>이준범</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap');
+    <style> @import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap');
 
-        * gamja-flower-regular {
-            font-family: "Gamja Flower", sans-serif;
-            font-weight: 400;
-        }
+    * {
+        font-family: "Gamja Flower", sans-serif;
+        font-weight: 1500;
+        font-size: 110%;
+    }
 
-        body {
-            background-color: black;
-        }
+    body {
+        background-color: black;
+    }
 
-        /* Biography */
-        #biography {
-            position: relative;
-            text-align: center;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            padding: 60px 20px;
-        }
+    #biography {
+        display: flex;
+        flex-direction: column; /* 이미지 위, 텍스트 아래 */
+        align-items: center; /* 전체 중앙 정렬 */
+        gap: 40px;
+        padding: 60px 20px;
+    }
 
-        .image-wrapper {
-            display: flex;
-            gap: 20px;
-        }
+    #biography img {
+        height: 600px;
+        width: 600px;
+        object-fit: cover;
+        border-radius: 10px;
+        transition: opacity 0.5s ease-in-out; /* 부드럽게 전환 */
+    }
 
-        .bio-image {
-            object-fit: cover;
-            height: 500px;
-            width: 100%;
-            border-radius: 10px;
-            transition: opacity 0.5s ease-in-out; /* 부드럽게 전환 */
-        }
+    .image_wrapper {
+        display: flex;
+        flex-direction: column; /* 위: 이미지, 아래: 버튼 */
+        align-items: center; /* 이미지는 가운데 정렬 */
+        gap: 20px;
+    }
 
-        .button-container {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            display: flex;
-            gap: 10px;
-        }
+    .image_container {
+        display: flex;
+        gap: 20px;
+        justify-content: center; /* 이미지 두 개 나란히 가운데 */
+    }
 
-        .button-container button {
-            background: white;
-            color: black;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: background 0.3s, transform 0.2s;
-        }
+    .button_container {
+        display: flex;
+        justify-content: flex-end; /* 오른쪽 끝 정렬 */
+        width: 100%; /* wrapper 기준 오른쪽 끝 */
+        max-width: 1200px; /* 이미지 폭에 맞춰 정렬하려면 제한 */
+        gap: 10px;
+    }
 
-        .button-container button:hover {
-            background: #ddd;
-            transform: scale(1.1);
-        }
+    .button_container button {
+        background: white;
+        color: black;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+    }
 
-        #biography img {
-            width: 100%;
-            border-radius: 10px;
-        }
+    .button_container button:hover {
+        background: #ddd;
+        transform: scale(1.1);
+    }
 
-        #biography-list ul,
-        #biography-list ol,
-        #biography-list p {
-            text-align: left;
-            color: #88aacf;
-        }
+    /* 텍스트 영역 */
+    .biography_list {
+        width: 100%;
+        max-width: 1200px;
+        text-align: left; /* 텍스트 왼쪽 정렬 */
+        color: #88aacf;
+    }
 
-        .biography-list {
-            text-align: left;
-            margin: 0 auto;
-            padding: 0 25px;
-        }
 
-        .biography-list h2 {
-            text-align: left;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            color: #b0becb;
-        }
+    .biography_list h2 {
+        text-align: left;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        color: #b0becb;
+    }
 
-        .biography-list h3 {
-            margin-top: 20px;
-            margin-bottom: 10px;
-            color: #b0becb;
-        }
+    .biography_list h3 {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        color: #a8b4cb;
+    }
 
-        hr {
-            border: none;
-            border-top: 1px solid #ccc;
-            margin: 20px 0;
-        }
+    hr {
+        border: none;
+        border-top: 1px solid #ccc;
+        margin: 20px 0;
+    }
 
-        footer {
-            text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-            font-size: 0.9rem;
-            color: #666;
-        }
+    footer {
+        text-align: center;
+        padding: 20px;
+        margin-top: 40px;
+        font-size: 0.9rem;
+        color: #666;
+    }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script> $(function () {
+        const images = [
+            'https://apricot-nose-2df.notion.site/image/attachment%3Aa085e94a-a526-4791-ae10-933263fe684a%3AIMG_0190.jpeg?table=block&id=27f555a1-c11f-80df-b652-eb7c085fbe9f&spaceId=376555a1-c11f-813c-a204-000349085a2a&width=1420&userId=&cache=v2',
+            'https://apricot-nose-2df.notion.site/image/attachment%3A680ebafe-e05e-42aa-a182-218b514b0e85%3AIMG_0191.jpeg?table=block&id=27f555a1-c11f-8063-ab6f-eb9ba9cd2127&spaceId=376555a1-c11f-813c-a204-000349085a2a&width=1420&userId=&cache=v2',
+            'https://apricot-nose-2df.notion.site/image/attachment%3A055b01c2-41a6-4490-a011-6bf08fc17192%3AIMG_0059.jpeg?table=block&id=27f555a1-c11f-8094-8260-e853913b76ef&spaceId=376555a1-c11f-813c-a204-000349085a2a&width=1420&userId=&cache=v2',
+            'https://apricot-nose-2df.notion.site/image/attachment%3A20f26183-624c-4a66-a9ca-7c1b08cdf795%3AIMG_0734.jpeg?table=block&id=27f555a1-c11f-802a-bcad-e24b12eeb64f&spaceId=376555a1-c11f-813c-a204-000349085a2a&width=1420&userId=&cache=v2',
+            'https://apricot-nose-2df.notion.site/image/attachment%3A6b314c64-2691-4168-b7c8-d1f4216c8227%3AIMG_0879.jpeg?table=block&id=27f555a1-c11f-80a2-8f6f-d81656188745&spaceId=376555a1-c11f-813c-a204-000349085a2a&width=1420&userId=&cache=v2',
+            'https://apricot-nose-2df.notion.site/image/attachment%3Acf3b5ae1-8236-4949-9d2b-9e2ec1935acd%3AIMG_0687.jpeg?table=block&id=27f555a1-c11f-8006-9b4b-f17f6b80de97&spaceId=376555a1-c11f-813c-a204-000349085a2a&width=1420&userId=&cache=v2',
+            'https://apricot-nose-2df.notion.site/image/attachment%3Aff421ef4-2dd8-4a58-8d5c-2af6a90b16e2%3AIMG_0733.jpeg?table=block&id=27f555a1-c11f-80f5-8ca1-d74c71a69334&spaceId=376555a1-c11f-813c-a204-000349085a2a&width=1420&userId=&cache=v2',
+            'https://apricot-nose-2df.notion.site/image/attachment%3A0eeffc43-a407-494f-899a-3d5cfbb63990%3AIMG_0697.jpeg?table=block&id=27f555a1-c11f-80a6-8a36-f526bf5168a1&spaceId=376555a1-c11f-813c-a204-000349085a2a&width=1420&userId=&cache=v2'];
+        let currentIndex = 0;
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js">
-    </script>
-    <script>
-        $(function () {
-            const images = [
-                'https://www.fitpetmall.com/wp-content/uploads/2023/10/shutterstock_1844153299-1024x683-1.png',
-                'https://cdn.dailyvet.co.kr/wp-content/uploads/2024/05/15231647/20240515ceva_experts4.jpg',
-                'https://imgnn.seoul.co.kr/img/upload/2024/08/06/SSC_20240806100040.jpg',
-                'https://file.daesoon.org/webzine/307/202212191656_Daesoon_263_%EB%AC%B8%ED%99%94%EC%82%B0%EC%B1%85_%EC%A0%84%EA%B2%BD%20%EC%86%8D%20%EB%8F%99%EB%AC%BC%20%EA%B3%A0%EC%96%91.jpg'
-            ];
-
-            let currentIndex = 0;
-
-            function updateImages() {
-                $(".bio-image").each(function(i) {
-                    const newSrc = images[(currentIndex + i) % images.length];
-                    $(this).css("opacity", 0); // 서서히 사라짐
-                    setTimeout(() => {
-                        $(this).attr("src", newSrc);
-                        $(this).css("opacity", 1); // 서서히 나타남
-                    }, 300);
-                });
-            }
-
-            $("#prevButton").click(function () {
-                currentIndex = (currentIndex - 1 + images.length) % images.length;
-                updateImages();
+        function updateImages() {
+            $(".bio_image").each(function (i) {
+                const newSrc = images[(currentIndex + i) % images.length];
+                $(this).css("opacity", 0); // 서서히 사라짐
+                setTimeout(() => {
+                    $(this).attr("src", newSrc);
+                    $(this).css("opacity", 1); // 서서히 나타남
+                }, 300);
             });
+        }
 
-            $("#nextButton").click(function () {
-                currentIndex = (currentIndex + 1) % images.length;
-                updateImages();
-            });
-
-            // 초기 실행
+        $("#prevButton").click(function () {
+            currentIndex = (currentIndex - 2 + images.length) % images.length;
             updateImages();
         });
+        $("#nextButton").click(function () {
+            currentIndex = (currentIndex + 2) % images.length;
+            updateImages();
+        });
+        // 초기 실행
+        updateImages();
+    });
     </script>
-
 </head>
-
 <body>
 <!-- Biography -->
 <section id="biography">
-    <div class="image-wrapper">
-        <img class="bio-image" alt="profileImage1">
-        <img class="bio-image" alt="profileImage2">
-    </div>
-    <div class="button-container">
-        <button id="prevButton">←</button>
-        <button id="nextButton">→</button>
-    </div>
-</section>
+    <!-- 이미지 + 버튼 -->
+    <div class="image_wrapper">
+        <!-- 이미지 두 개 묶음 -->
+        <div class="image_container">
+            <div class="image_box">
+                <img class="bio_image" alt="profileImage1">
+            </div>
+            <div class="image_box">
+                <img class="bio_image" alt="profileImage2">
+            </div>
+        </div>
 
-<section id="biography-list">
-    <div class="biography-list">
-        <div class="row text-center">
-            <h2>Biography</h2>
-            <div class="col-md-4">
-                <h3>기본 소개</h3>
+        <!-- 버튼 (이미지 전체 밑, 오른쪽 끝) -->
+        <div class="button_container">
+            <button id="prevButton">←</button>
+            <button id="nextButton">→</button>
+        </div>
+    </div>
+
+    <!-- 텍스트 영역 -->
+    <div class="biography_list"><h2>Biography</h2>
+        <div class="row">
+            <div class="col-md-4"><h3>기본 소개</h3>
                 <hr>
                 <ul>
                     <li>나이 : 31살</li>
                     <li>MBTI : ISFJ</li>
                 </ul>
             </div>
-            <div class="col-md-4">
-                <h3>취미</h3>
+            <div class="col-md-4"><h3>취미</h3>
                 <hr>
                 <ul>
                     <li>노래듣기</li>
                     <li>게임</li>
                 </ul>
             </div>
-            <div class="col-md-4">
-                <h3>제 주인님</h3>
+            <div class="col-md-4"><h3>제 주인님</h3>
                 <hr>
                 <ul>
                     <li>성함 : 달이</li>
