@@ -1,174 +1,180 @@
 <html lang="KR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/png" sizes="64x64" href="../src/prism_favicon_64.png">
-<title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="64x64" href="../src/prism_favicon_64.png">
+  <title>Document</title>
 </head>
 <link rel="stylesheet" href="../src/reset.css">
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-  />
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <style>
-.loading_box {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #111;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-.loading_box.off{
-  display:none;
-}
-.loading_bar {
-  width: 300px;
-  height: 40px;
-  border-radius: 10px;
-  overflow: hidden;
-  position: relative;
-  box-sizing:border-box;
-}
-.border{
-  width: 100%;
-  height: 20px;
-  border: 2px solid #fff;
-  box-sizing:border-box;
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 10px;
-  overflow: hidden;
-}
-.red_bar {
-  width: 0;
-  height: 100%;
-  position: absolute;
-  background-color: #c3220f;
-  animation: loadingAnimation 1.5s linear forwards;
-}
-@keyframes loadingAnimation {
-  0% {
-    width: 0;
-  }
-  100% {
+  .loading_box {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
+    background-color: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
   }
-}
-.number{
-  position:absolute;
-  left:50%;
-  bottom:0;
-  width:100%;
-  margin-left:-150px;
-  color:#fff;
-  text-align:center;
-}
-section{
-  width:100%;
-  max-width:1400px;
-  margin:50px auto;
-  color:#fff;
-}
-section .photo{
-  margin:0 auto;
-  width:500px;
-  height:500px;
-}
-section .photo img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  border-radius:10px;
-}
-.skills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content:center;
-}
-
-.skill {
-  width:33%;
-  padding: 1.2rem;
-  text-align: center;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 12px;
-  border: 3px solid currentColor;
-  color: #333;
-  transition: transform 0.3s ease;
-  animation: bounce 2s ease infinite;
-}
-
-/* 순차 애니메이션 딜레이 */
-.skill:nth-child(1) { animation-delay: 0s; }
-.skill:nth-child(2) { animation-delay: 0.2s; }
-.skill:nth-child(3) { animation-delay: 0.4s; }
-.skill:nth-child(4) { animation-delay: 0.6s; }
-.skill:nth-child(5) { animation-delay: 0.8s; }
-.skill:nth-child(6) { animation-delay: 1s; }
-
-@keyframes bounce {
-  0%, 20% {
-    transform: translateY(0);
+  .loading_box.off{
+    display:none;
   }
-  30% {
-    transform: translateY(-15px);
+  .loading_bar {
+    width: 300px;
+    height: 40px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    box-sizing:border-box;
   }
-  40% {
-    transform: translateY(0);
+  .border{
+    width: 100%;
+    height: 20px;
+    border: 2px solid #fff;
+    box-sizing:border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 10px;
+    overflow: hidden;
   }
-  100% {
-    transform: translateY(0); /* 여기서 1초 정지 */
+  .red_bar {
+    width: 0;
+    height: 100%;
+    position: absolute;
+    background-color: #c3220f;
+    animation: loadingAnimation 1.5s linear forwards;
   }
-}
-
-/* 개별 기술 색상 */
-.skill.html {
-
-  background-color: #E34F26;
-}
-
-.skill.css {
-  background-color: #1572B6;
-}
-
-.skill.js {
-  background-color: #F7DF1E;
-}
-
-.skill.react {
-  background-color: #61DAFB;
-}
-
-.skill.vue {
-  background-color: #42B883;
-}
-
-.skill.sql {
-  background-color: #00618A;
-}
-.box_tab{
-  width:100%;
-  display:flex;
-  flex-direction:row;
-  gap:20px;
-  margin:0 auto;
-  justify-content:center;
-}
-.box_tab .box_item{
-  width:50%;
-  background-color:#222;
-  padding:50px;
-  border-radius:10px;
+  @keyframes loadingAnimation {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+  .number{
+    position:absolute;
+    left:50%;
+    bottom:0;
+    width:100%;
+    margin-left:-150px;
+    color:#fff;
+    text-align:center;
+  }
+  section{
+    width:100%;
+    max-width:1400px;
+    margin:50px auto;
+    color:#fff;
+  }
+  section .photo{
+    margin:0 auto;
+    width:500px;
+    height:500px;
+  }
+  section .photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:10px;
+  }
+  .skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content:center;
+  }
+  
+  .skill {
+    width:33%;
+    padding: 1.2rem;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 12px;
+    border: 3px solid currentColor;
+    color: #333;
+    transition: transform 0.3s ease;
+    animation: bounce 2s ease infinite;
+  }
+  
+  /* 순차 애니메이션 딜레이 */
+  .skill:nth-child(1) { animation-delay: 0s; }
+  .skill:nth-child(2) { animation-delay: 0.2s; }
+  .skill:nth-child(3) { animation-delay: 0.4s; }
+  .skill:nth-child(4) { animation-delay: 0.6s; }
+  .skill:nth-child(5) { animation-delay: 0.8s; }
+  .skill:nth-child(6) { animation-delay: 1s; }
+  
+  @keyframes bounce {
+    0%, 20% {
+      transform: translateY(0);
+    }
+    30% {
+      transform: translateY(-15px);
+    }
+    40% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(0); /* 여기서 1초 정지 */
+    }
+  }
+  
+  /* 개별 기술 색상 */
+  .skill.html {
+    
+    background-color: #E34F26;
+  }
+  
+  .skill.css {
+    background-color: #1572B6;
+  }
+  
+  .skill.js {
+    background-color: #F7DF1E;
+  }
+  
+  .skill.react {
+    background-color: #61DAFB;
+  }
+  
+  .skill.vue {
+    background-color: #42B883;
+  }
+  
+  .skill.sql {
+    background-color: #00618A;
+  }
+  .box_tab{
+    width:100%;
+    display:flex;
+    flex-direction:row;
+    gap:20px;
+    margin:0 auto;
+    justify-content:center;
+  }
+  .box_tab .box_item{
+    width:50%;
+    background-color:#222;
+    padding:50px;
+    border-radius:10px;
+  }
+  .box_tab .box_item strong{
+    font-size:40px;
+    font-weight:800;
+    min-height:120px;
+    display:block;
   }
   .box_tab .box_item.right{
     display:flex;
@@ -176,26 +182,127 @@ section .photo img{
     align-items:center;
     justify-content:space-between;
   }
-    .box_tab .box_item.right p{
-      font-size:32px;
-      color:#fff;
-      font-weight:800;
-    }
+  .box_tab .box_item.right p{
+    font-size:32px;
+    color:#fff;
+    font-weight:800;
+  }
   .article{
     display:flex;
     flex-direction:row;
     justify-content:center;
     gap:20px;
   }
+  
+  main{
+    width:100%;
+    max-width:1400px;
+    margin:50px auto;
+    color:#333;
+    padding:0 20px 50px 20px;
+    box-sizing:border-box;
+  }
+  main .swiper{
+    width:100%;
+    max-width:1200px;
+    height:500px;
+    margin:0 auto;
+    position:relative;
+  }
+  main .swiper .swiper-slide{
+    width:30%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+  }
+  main .swiper .swiper-slide .imgWrap{
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    
+  }
+  main .swiper .swiper-slide .imgWrap .imgBox{
+    width:350px;
+    height:350px;
+    margin:5px;
+    overflow:hidden;
+    border-radius:10px;
+  }
+  main .swiper .swiper-pagination{
+    width:190px;
+    left:50%;
+    margin-left:-85px;
+    height:auto;
+  }
+  main .swiper .swiper-pagination .swiper-pagination-bullet{
+    width:20px;
+    height:20px;
+    background-color:#333;
+    opacity:1;
+    transition:all 0.3s ease;
+  }
+  main .swiper .swiper-pagination .swiper-pagination-bullet-active{
+    background-color:#007aff;
+    width:120px;
+    border-radius:10px;
+  }
+  .hobby p{position:relative;}
+  .hobby p.title{font-size:30px;font-weight:800;}
+  .hobby>p::after{
+    content:'';
+    display:block;
+    position:absolute;
+    left:0;
+    bottom:-5px;
+    width:100%;
+    height:2px;
+    background-color:#111;
+  }
+  .contactBox{
+    display:flex;
+    margin-top:30px;
+    flex-direction:row;
+    gap:20px;
+    justify-content:center;
+  }
+  .contactBox a{
+    width:200px;
+    height:50px;
+    border:1px solid #333;
+    text-align:center;
+    font-size:24px;
+    line-height:50px;
+    border-radius:50px;
+    transition:all 0.3s ease;
+  }
+  .contactBox a.git {
+    background-color: #24292e;
+    color: #fff;
+    border-color: #24292e;
+  }
+  .contactBox a.git:hover {
+    background-color: #000;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  }
+  .contactBox a.velog {
+    background-color: #20C997;
+    color: #fff;
+    border-color: #20C997;
+  }
+  .contactBox a.velog:hover {
+    background-color: #18a57a;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(32, 201, 151, 0.5);
+  }
 </style>
 <script>
   window.addEventListener('load', function() {
     const swiper = new Swiper('.swiper', {
       loop: true,
-      autoplay: {
-        delay: 2000,
-        disableOnInteraction: false,
-      },
+      autoplay:false,
       pagination: {
         el: '.swiper-pagination',
         clickable: true,
@@ -208,107 +315,133 @@ section .photo img{
   });
 </script>
 <body>
-<!-- <div class="loading_box">
-  <div class="loading_bar">
-    <div class="border">
-      <div class="red_bar"></div>
-    </div>
-    <div class="number"></div>
-  </div>
-</div> -->
-<section>
-  <div class="article">
-    <div class="photo">
-      <img src="../src/minyung.png" alt="">
-    </div>
-    <div class="box_tab">
-      <div class="box_item">
-        <h1>원민영</h1>
-        <p>AGE : 32</p>
-        <p>전공 : 시각디자인과</p>
-        <p>취미 : 운동, 음악, 게임</p>
+  <div class="loading_box">
+    <div class="loading_bar">
+      <div class="border">
+        <div class="red_bar"></div>
       </div>
-      <div class="box_item right">
-        <p>Skills</p>
-        <div class="skills">
-          <div class="skill html">HTML</div>
-          <div class="skill css">CSS</div>
-          <div class="skill js">JavaScript</div>
-          <div class="skill react">React</div>
-          <div class="skill vue">Vue</div>
-          <div class="skill sql">SQL</div>
+      <div class="number"></div>
+    </div>
+  </div>
+  <section>
+    <div class="article">
+      <div class="photo">
+        <img src="../src/minyung.png" alt="">
+      </div>
+      <div class="box_tab">
+        <div class="box_item">
+          <strong>퍼블리셔에서 백엔드 개발자로</strong>
+          <p>안녕하세요. 스프링 9기 원민영입니다.</p>
+        </div>
+        <div class="box_item right">
+          <p>Skills</p>
+          <div class="skills">
+            <div class="skill html">HTML</div>
+            <div class="skill css">CSS</div>
+            <div class="skill js">JavaScript</div>
+            <div class="skill react">React</div>
+            <div class="skill vue">Vue</div>
+            <div class="skill sql">SQL</div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   </section>
   <main>
-    <h2>취미</h2>
+    <h2>Favorite</h2>
     <div class="hobby">
       <p>음악</p>
       <div class="swiper">
         <div class="swiper-wrapper">
           <div class="swiper-slide">
             <p class="title">
-              힙합
+              Hip-Hop
             </p>
-            <div class="imgBox">
-              <img src="../src/my_img/fav_img_01.png" alt="">
-            </div>
-                        <div class="imgBox">
-              <img src="../src/my_img/fav_img_02.png" alt="">
-            </div>
-                        <div class="imgBox">
-              <img src="../src/my_img/fav_img_03.png" alt="">
+            <div class="imgWrap">
+              <div class="imgBox">
+                <img src="../src/my_img/fav_img_01.png" alt="">
+              </div>
+              <div class="imgBox">
+                <img src="../src/my_img/fav_img_02.png" alt="">
+              </div>
+              <div class="imgBox">
+                <img src="../src/my_img/fav_img_03.png" alt="">
+              </div>
             </div>
           </div>
-                    <div class="swiper-slide">
+          <div class="swiper-slide">
             <p class="title">
-              락
+              Rock
             </p>
-            <div class="imgBox">
-              <img src="../src/my_img/fav_img_04.png" alt="">
-            </div>
-                        <div class="imgBox">
-              <img src="../src/my_img/fav_img_05.png" alt="">
-            </div>
-                        <div class="imgBox">
-              <img src="../src/my_img/fav_img_06.png" alt="">
+            <div class="imgWrap">
+              <div class="imgBox">
+                <img src="../src/my_img/fav_img_04.png" alt="">
+              </div>
+              <div class="imgBox">
+                <img src="../src/my_img/fav_img_05.png" alt="">
+              </div>
+              <div class="imgBox">
+                <img src="../src/my_img/fav_img_06.png" alt="">
+              </div>
             </div>
           </div>
-                    <div class="swiper-slide">
+          <div class="swiper-slide">
             <p class="title">
               K-POP
             </p>
-            <div class="imgBox">
-              <img src="../src/my_img/fav_img_07.png" alt="">
-            </div>
-                        <div class="imgBox">
-              <img src="../src/my_img/fav_img_08.png" alt="">
-            </div>
-                        <div class="imgBox">
-              <img src="../src/my_img/fav_img_09.png" alt="">
+            <div class="imgWrap">
+              <div class="imgBox">
+                <img src="../src/my_img/fav_img_07.png" alt="">
+              </div>
+              <div class="imgBox">
+                <img src="../src/my_img/fav_img_08.png" alt="">
+              </div>
+              <div class="imgBox">
+                <img src="../src/my_img/fav_img_09.png" alt="">
+              </div>
             </div>
           </div>
         </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+    <h2>Contact</h2>
+    <div class="hobby">
+      <p>해당 링크들에서 제 개발 목록들이 업데이트 됩니다.</p>
+      <div class="contactBox">
+        <a class="git" href="https://github.com/Fantasystar94" target="_blank">Github</a>
+        <a class="Velog" href="https://velog.io/@wonminyung94/posts" target="_blank">Velog</a>
       </div>
     </div>
   </main>
+  
 </body>
 <script>
-// window.addEventListener('load', function() {
-//   const loadingBox = document.querySelector('.loading_box');
-//   const number = document.querySelector('.number');
-//   for(let i =1;i<=100;i++){
-//     setTimeout(function() {
-//       number.innerText = i + '%';
-//       if(i===100){
-//         setTimeout(function(){
-//           loadingBox.classList.add('off');  
-//         },15);
-//       }
-//     }, i*15); 
-//   }
-// });
+  window.addEventListener('load', function() {
+    const loadingBox = document.querySelector('.loading_box');
+    const number = document.querySelector('.number');
+    const strongs = document.querySelectorAll(".box_item strong");
+    for(let i =1;i<=100;i++){
+      setTimeout(function() {
+        number.innerText = i + '%';
+        if(i===100){
+          setTimeout(function(){
+            loadingBox.classList.add('off');  
+            strongs.forEach((el, idx) => {
+              const text = el.innerText;   // 원래 텍스트 저장
+              el.innerText = "";           // 초기화
+              
+              [...text].forEach((char, i) => {
+                setTimeout(() => {
+                  el.innerText += char;    // 한 글자씩 추가
+                }, i * 100 + idx * 500);   // 글자마다 0.1s 간격, 요소마다 딜레이
+              });
+            });
+          },15);
+        }
+      }, i*15); 
+    }
+    
+  });
 </script>
 </html>
