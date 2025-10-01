@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>세진 · 자기소개</title>
+
+  <style>
+    :root{
+      --ink:#0b0b0f; --muted:#6b7280; --bg:#f8fafc;
+      --card:#ffffff; --brand:#f59e0b;
+    }
+
+ .card img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+
+.card.card3d-wrap.reveal{
+ max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.card-img-top{
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.hober{
+  max-width: 1000%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+}
+
+
+
+    /* 헤더 */
+    header{position:sticky;
+    top:0;z-index:50;
+    background:#fffccf80;
+    backdrop-filter:saturate(1.1) blur(6px);
+    border-bottom:1px solid #e5e7eb
+    }
+   .nav{
+    max-width:1100px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 16px
+    }
+
+    .nav ul{display:flex;gap:12px;list-style:none;margin:0;padding:0}
+    .chip{font-size:px;padding:8px 12px;border-radius:999px;border:1px solid #e5e7eb;background:#fff}
+    .chip:hover{background:#fff7ed;border-color:#fed7aa}
+
+    /* 섹션 공통 */
+    section{max-width:1100px;margin:0 auto;padding:80px 16px}
+    h1,h2{margin:0 0 12px}
+    p{margin:8px 0;color:var(--muted)}
+
+    /* Home: 타이핑 */
+    .hero{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:center}
+    @media (max-width:900px){.hero{grid-template-columns:1fr}}
+    .title h1{font-size: 50px;
+     font-weight: bold; }
+    .title p {
+    font-size: 1.4rem;
+    }
+    .kbd{display:inline-block;background:#0b0b0f;color:#fff;padding:2px 8px;border-radius:6px;font-size:12px}
+
+    /* About: 스크롤 리빌 + 3D 카드 */
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+    .card{background:var(--card);border:1px solid #e5e7eb;border-radius:1px;padding:16px;box-shadow:0 6px 12px rgba(0,0,0,.04)}
+    .reveal{opacity:0;transform:translateY(24px);transition:.6s ease}
+    .reveal.on{opacity:1;transform:none} /* IntersectionObserver로 토글 */
+
+    .card3d-wrap{perspective:900px} /* 3D 효과 기초 */ /* :contentReference[oaicite:2]{index=2} */
+    .card3d{transform-style:preserve-3d;transition:transform .3s ease}
+    .card3d:hover{transform:rotateX(6deg) rotateY(-6deg)}
+    .card3d .face{transform:translateZ(20px)}
+
+    /* Favorite*/
+    .slider{position:relative;overflow:hidden;border-radius:16px;border:1px solid #e5e7eb}
+    .track{display:flex;transition:transform .4s ease}
+    .slide{min-width:100%;padding:40px;background:#fff}
+    .ctrl{position:absolute;inset:auto 12px 12px auto;display:flex;gap:8px}
+    .btn{border:0;background:#111;color:#fff;padding:8px 12px;border-radius:10px;cursor:pointer}
+    .btn:disabled{opacity:.4;cursor:default}
+
+    /* Contact */
+    .links{display:flex;gap:14px;flex-wrap:wrap}
+    .links a{border:1px solid #e5e7eb;border-radius:12px;padding:10px 12px;background:#fff}
+    .links a:hover{background:#fff7ed;border-color:#fed7aa}
+  </style>
+</head>
+<body>
+
+
+<header>
+  <nav class="nav">
+    <strong>Sejin's Introduction Page</strong>
+    <audio autoplay loop muted id="bgm">
+      <source src="./src/996D96465CE2C6E804.mp3" type="AddType audio/mp3">
+    </audio>
+
+
+    <button onclick="document.getElementById('bgm').play()">▶ 재생</button>
+    <button onclick="document.getElementById('bgm').pause()">⏸ 정지</button>
+
+    <ul>
+      <li><a class="chip" href="#home" title="Home">Home</a></li>
+      <li><a class="chip" href="#about" title="About">About</a></li>
+      <li><a class="chip" href="#favorite" title="Favorite">Favorite</a></li>
+      <li><a class="chip" href="#contact" title="Contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <!-- Home -->
+  <section id="home">
+    <div class="hero">
+      <div class="title">
+        <h1 id="typing"></h1>
+        <p>안녕하세요. 5조의 팀장 이세진 입니다! 😁</p>
+        <p><span class="kbd">Java</span> <span class="kbd">SQL</span> <span class="kbd">Git</span></p>
+      </div>
+      <div class="card">
+            <img src="https://img.notionusercontent.com/s3/prod-files-secure%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2Fcf5fa64a-9286-4de4-934b-b35895209c0a%2FKakaoTalk_20250929_095016250.jpg/size/w=2000?exp=1759316321&sig=p4UZFVYHxgKZzucMZ8cBiAxvz897dfawZBAxGegwgCc&id=27e2dc3e-f514-80de-8ecf-dcef79ef2c05&table=block&userId=d4dfa77e-a5bd-4327-ac3e-f0d19a8ba145"
+                 class="card-img-top" alt="...">
+          </div>
+      </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <h2>About Me</h2>
+    <p>바리스타에서 개발자로의 전환</p>
+    <div class="grid">
+      <div class="card reveal">커피  → 백엔드 여정
+        <img src="https://img.notionusercontent.com/s3/prod-files-secure%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2F6af9a06c-3105-4bc6-86cb-7eba6e90c5ba%2FGemini_Generated_Image_3t4cqn3t4cqn3t4c.png/size/w=2000?exp=1759367826&sig=7K68jo7blsEtGHejEXQNPAbY_vnQz1Afy_nMcmEdJQ0&id=27f2dc3e-f514-802b-8d14-ccd74dfb92de&table=block&userId=d4dfa77e-a5bd-4327-ac3e-f0d19a8ba145"
+             class="card-img-top" alt="..."></div>
+    <div class="card card3d-wrap reveal">
+      <div class="card3d card">
+        <div class="hober"><strong> 호버링시 3d효과 </strong><br/>
+          <img src="https://img.notionusercontent.com/s3/prod-files-secure%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2Fffae236f-db2f-4c37-971b-62acc5166101%2Flatte_art_grid.jpg/size/w=2000?exp=1759367267&sig=mSPNBm-AlTVUD9hshJ8ZCSnVFASLI4ltPMTfwqPHjMk&id=27e2dc3e-f514-80d0-acf7-e8b07eca8525&table=block&userId=d4dfa77e-a5bd-4327-ac3e-f0d19a8ba145"
+               class="card-img-top" alt="...">
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- Favorite (슬라이더) -->
+  <section id="favorite">
+    <h2>Favorite</h2>
+    <p>나의 관심사 좌우 슬라이더</p>
+    <div class="slider" id="slider">
+      <div class="track" id="track">
+        <div class="slide">즐겨 듣는 음악</br>
+          <img src="https://i1.sndcdn.com/artworks-000671600830-7lnsy5-t500x500.jpg">
+          <img src="https://mblogthumb-phinf.pstatic.net/20160218_271/level-0_1455782866507m0bc4_JPEG/%C4%AB%C6%E6%C5%CD%BD%BA.jpg?type=w420">
+        </div>
+        <div class="slide">요즘 관심사 야구</br>
+          <img src="https://img1.newsis.com/2024/01/13/NISI20240113_0001458607_web.jpg">
+          <img src="">
+        </div>
+        <div class="slide"> 컴퓨터 조립 </br>
+          <img src="https://img.notionusercontent.com/s3/prod-files-secure%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2Fd6fb7829-0e4d-48f0-8e95-84e02a160ecd%2FKakaoTalk_20251001_111854096_(2).jpg/size/w=2000?exp=1759371730&sig=41laAuWi8-5S0xWBM1RtqK5nmjj9ri_ikoik2hGEIco&id=27f2dc3e-f514-801d-94f3-ffbb7bfd37b6&table=block&userId=d4dfa77e-a5bd-4327-ac3e-f0d19a8ba145">
+
+        </div>
+      </div>
+      <div class="ctrl">
+        <button class="btn" id="prev">〈 Prev</button>
+        <button class="btn" id="next">Next 〉</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>앞으로 개발과정에서 함께할 나의 발자취들</p>
+    <div class="links">
+      <a href="https://github.com/dandylsj" target="_black" rel="noopener">GitHub</a>
+      <a href="https://velog.io/@lsjyahoo/posts" target="_blank" rel="noopener">Velog</a>
+      <a href="https://www.notion.so/teamsparta/5-PRISM-27a2dc3ef51481da9bd4d4387292dbb6" target="_blank" rel="noopener">Team Notion</a>
+    </div>
+  </section>
+</main>
+
+<footer style="text-align:center;padding:40px 16px;color:#94a3b8">© <span id="year"></span> Sejin</footer>
+
+<script>
+
+  /* 타이핑 */
+  const content = "커피로스팅의 디테일로 서버를 설계하는 백엔드 지망생";
+  const target  = document.getElementById('typing');
+  let idx = 0;
+  function typing(){
+    if(idx <= content.length){
+      target.textContent = content.slice(0, idx++);
+    } else {
+      idx = 0; target.textContent = ""; // 반복형(원글과 유사 아이디어) :contentReference[oaicite:6]{index=6}
+    }
+  }
+  setInterval(typing, 150);
+
+  /* 2) 스크롤 리빌 — About 섹션 */
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('on'); });
+  }, {threshold: .2});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* Favorite 섹션  */
+  const track = document.getElementById('track');
+  const slides = document.querySelectorAll('.slide');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  let cur = 0;
+  function render(){ track.style.transform = `translateX(${-100*cur}%)`; prev.disabled = (cur===0); next.disabled = (cur===slides.length-1); }
+  prev.onclick = ()=>{ if(cur>0){ cur--; render(); } };
+  next.onclick = ()=>{ if(cur<slides.length-1){ cur++; render(); } };
+  render();
+
+
+</script>
+</body>
+</html>
