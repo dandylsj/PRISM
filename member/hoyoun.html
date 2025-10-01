@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>자기소개서</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+        /* @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Dodum&display=swap');
+
+        * {
+            font-family: 'Gowun Dodum', sans-serif;
+        } */
+
+        /* loading screen*/
+        /* .loading_screen {
+            background-color: green;
+            width: 100%;
+            height: 100%;
+            background-image: url('...');
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+        } */
+
+        /* #home .title h1 {
+            font-size: 2.5rem;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: .15em solid #fff;
+            animation: blinkCursor 0.8s steps(1) infinite;
+        } */
+
+
+        /* 로딩바 무지개색 채워지는 */
+        /* gradient 
+                예시 .rainbow-gradient {
+                background: linear-gradient(45deg,
+                        red,
+                        orange,
+                        yellow,
+                        green,
+                        blue,
+                        indigo,
+                        violet);
+            } */
+
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #111;
+        }
+
+
+
+
+        .loading_p {
+            text-align: center;
+            /* width: 100%; */
+        }
+
+        .loading_container {
+            width: 600px;
+            /* width: 100%; */
+            display: flex;
+            height: 30px;
+            background: black;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .loading_text_top {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 30px;
+        }
+        
+        .loading_icon {
+            width: 50px;
+            height: 50px;
+        }
+
+        .loading_bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    red,
+                    orange,
+                    yellow,
+                    green,
+                    blue,
+                    indigo,
+                    violet);
+            border-radius: 15px 0 0 15px;
+            transition: width 0.05s linear;
+            /* 부드럽게 채워지게 */
+            overflow: hidden;
+            /* margin: 0 auto; */
+
+
+            /* box-shadow: 0 0 600px color; */
+            /* 이걸로 셰도우넣어서 뿌옇게 빛나는? 느낌으로 후에 추가 */
+            /* hue-rotate : 원본 이미지에 대한 상대적 색조의 변화 값
+                            양수로 설정하여 회전하면 색조 값을 증가시키고 반대(음수)의 회전은 색조 값을 감소시킨다
+                            + deg 지정 가능 */
+        }
+
+        .loading_text_bottom {
+            text-align: center;
+            color: white;
+            margin-top: 30px;
+            font-size: 30px;
+        }
+
+        .loading_text_bottom span {
+            display: inline-block;
+            animation: wave 1.5s ease-in-out infinite;
+            /* name → 실행할 @keyframes 이름
+            duration → 한 번 애니메이션이 실행되는 시간
+            timing-function → 속도 변화 방식 (어떤 가속도로 움직일지)
+            iteration-count → 반복 횟수 (infinite = 무한 반복) */
+        }
+
+        .loading_text_bottom span:nth-of-type(1) {
+            animation-delay: 0s;
+        }
+        .loading_text_bottom span:nth-of-type(2) {
+            animation-delay: 0.1s;
+        }
+        .loading_text_bottom span:nth-of-type(3) {
+            animation-delay: 0.2s;
+        }
+        .loading_text_bottom span:nth-of-type(4) {
+            animation-delay: 0.3s;
+        }
+        .loading_text_bottom span:nth-of-type(5) {
+            animation-delay: 0.4s;
+        }
+        .loading_text_bottom span:nth-of-type(6) {
+            animation-delay: 0.5s;
+        }
+        .loading_text_bottom span:nth-of-type(7) {
+            animation-delay: 0.6s;
+        }
+        .loading_text_bottom span:nth-of-type(8) {
+            animation-delay: 0.7s;
+        }
+        .loading_text_bottom span:nth-of-type(9) {
+            animation-delay: 0.8s;
+        }
+        .loading_text_bottom span:nth-of-type(10) {
+            animation-delay: 0.9s;
+        }
+        .loading_text_bottom span:nth-of-type(11) {
+            animation-delay: 0.10s;
+        }
+        .loading_text_bottom span:nth-of-type(12) {
+            animation-delay: 0.11s;
+        }
+        .loading_text_bottom span:nth-of-type(13) {
+            animation-delay: 0.12s;
+        }
+
+        @keyframes wave {
+            0% {
+                transform: translateY(0);
+            }
+            25% {
+                transform: translateY(-5px);
+            }
+            50% {
+                transform: translateY(0);
+            }
+            75% {
+                transform: translateY(5px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* ✅ About 섹션 */
+        #about {
+            display: none;
+            padding: 50px;
+        }
+
+        #about > h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* 포스터 박스 */
+        .post-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .post_box {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px black(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .post_box:hover {
+            transform: translateY(-5px);
+        }
+
+        .post_box > img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .post-box.content {
+            padding: 15px;
+        }
+
+        .post-box.content > h3 {
+            margin: 0 0 10px;
+            font-size: 18px;
+        }
+
+        .post-box.content > p {
+            font-size: 14px;
+            color: gray;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- loading_screen -->
+    <div id="loading">
+        <p class="loading_text_top">~~~ My page ~~~</p>
+        <div class="loading_container">
+            <img src="/src/prism_icon.png" alt="..." class="loading_icon">
+            <div class="loading_bar_box">
+                <div class="loading_bar" id="bar"></div>
+            </div>
+        </div>
+        <p class="loading_text_bottom">
+            <!-- ~~~LOADING~~~ -->
+            <span>~</span>
+            <span>~</span>
+            <span>~</span>
+            <span>L</span>
+            <span>O</span>
+            <span>A</span>
+            <span>D</span>
+            <span>I</span>
+            <span>N</span>
+            <span>G</span>
+            <span>~</span>
+            <span>~</span>
+            <span>~</span>
+        </p>
+
+
+        <!-- About section -->
+        <div id="about">
+            <h1>About Section</h1>
+            <div class="post_container">
+                <div class="post_box">
+                    <img src="https://picsum.photos/400/200?random=1" alt="포스터1">
+                    <div class="content">
+                        <h3>me</h3>
+                        <p>me</p>
+                    </div>
+                </div>
+                <div class="post_box">
+                    <img src="https://picsum.photos/400/200?random=2" alt="포스터2">
+                    <div class="content">
+                        <h3>hobby</h3>
+                        <p>hobby</p>
+                    </div>
+                </div>
+                <div class="post_box">
+                    <img src="https://picsum.photos/400/200?random=3" alt="포스터3">
+                    <div class="content">
+                        <h3>tmi</h3>
+                        <p>tmi</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <script>
+            const bar = document.getElementById("bar");
+            const loading = document.getElementById("loading");
+            const about = document.getElementById("about");
+            let progress = 0;
+
+            function fillBar() {
+                if (progress <= 100) {
+                    bar.style.width = progress + "%";
+                    progress++;
+                    setTimeout(fillBar, 20);
+                }
+                else {
+                    loading.style.display = "none";
+                    about.style.display = "block";
+                }
+            }
+            window.addEventListener("load", fillBar);
+        </script>
+    </div>
+</body>
+
+</html>
