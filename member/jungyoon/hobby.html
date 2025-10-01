@@ -20,8 +20,8 @@
             /* 화면 기준 고정 */
             transform: translateY(50%);
             /* 중앙 정렬 */
-            
-     
+
+
         }
 
         .about-text {
@@ -34,7 +34,7 @@
 
         .about-content {
             max-width: 600px;
-            
+
         }
 
         .about-content h3 {
@@ -53,13 +53,15 @@
             /* 아이템 간 간격 */
         }
 
-        .about-div,
-        .main-div,
-        .scroll-div {
-            flex: 33%;
-            /* 균등 배치 */
+        .about-div {
+            flex: 30%;
         }
 
+        .main-div,
+        .scroll-div {
+            flex: 35%;
+            /* 균등 배치 */
+        }
 
 
         .scroll-div-child {
@@ -84,7 +86,12 @@
 
         }
 
+        .pic1 {
+            margin: 50px auto;
+        }
         
+
+       
     </style>
 </head>
 
@@ -98,7 +105,7 @@
             <div class="about-section">
                 <div class="about-text">ABOUT</div>
                 <div class="about-content">
-                    <h3>My hobby is<br/>
+                    <h3>My hobby is<br />
                     </h3>
                 </div>
             </div>
@@ -106,10 +113,30 @@
 
         <!-- 중앙 메인 섹션 -->
         <div class="main-div">
-            <div>
-                <div><img src="/PRISM/src/cjy - img/해방촌.png" alt="" width="100%"></div>
-                <div><p style="font-size: 25px;">노을 뷰가 예쁜 곳이나 자연 풍경을 보며 힐링하는 것을 좋아합니다 !</p></div>
+            <div class="pic1">
+                <div><img src="../../src/cjy - img/sunset2.jpeg" alt="" width="95%"></div>
+                <div>
+                    <p style="font-size: 22px; text-align: center;">자연 풍경을 보며 힐링하는 것을 좋아합니다</p>
+                </div>
             </div>
+
+
+
+            <div class="pic1">
+                <div><img src="../../src/cjy - img/haebangchon.png" alt="" width="95%" height="80%"></div>
+                <div>
+                    <p style="font-size: 22px; text-align: center;">여기는 노을 뷰가 예쁜 해방촌입니다 !</p>
+                </div>
+            </div>
+
+            
+            <div class="pic1">
+                <div><img src="../../src/cjy - img/busan.jpeg" alt="" width="95%" height="80%"></div>
+                <div>
+                    <p style="font-size: 22px; text-align: center;">바다 보는 것도 좋아합니다 🌊</p>
+                </div>
+            </div>
+            
         </div>
 
         <!-- 오른쪽 스크롤 섹션 -->
@@ -120,11 +147,16 @@
                     <div class="row">
                         <div class="col-4">
                             <div id="list-example" class="list-group">
-                                <a class="list-group-item list-group-item-action" href="/PRISM/member/jungyoon/jungyoon.html">Jungyoon</a>
-                                <a class="list-group-item list-group-item-action" href="/PRISM/member/jungyoon/hobby.html">Hobby</a>
-                                <a class="list-group-item list-group-item-action" href="/PRISM/member/jungyoon/hamster.html">My 🐹</a>
-                                <a class="list-group-item list-group-item-action" href="/PRISM/member/jungyoon/cat.html">Like 🐈</a>
-                                <a class="list-group-item list-group-item-action" href="/PRISM/member/jungyoon/song.html">Song 🎶</a>
+                                <a class="list-group-item list-group-item-action"
+                                    href="../../member/jungyoon/jungyoon.html">Jungyoon</a>
+                                <a class="list-group-item list-group-item-action"
+                                    href="../../member/jungyoon/hobby.html">Hobby</a>
+                                <a class="list-group-item list-group-item-action"
+                                    href="../../member/jungyoon/hamster.html">My 🐹</a>
+                                <a class="list-group-item list-group-item-action"
+                                    href="../../member/jungyoon/cat.html">Like 🐈</a>
+                                <a class="list-group-item list-group-item-action"
+                                    href="../../member/jungyoon/song.html">Song 🎶</a>
                             </div>
                         </div>
                     </div>

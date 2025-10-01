@@ -2,96 +2,103 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scrollspy Example</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* ABOUT 섹션 */
-        .about-section {
-            display: flex;
-            align-items: flex-start;
-            padding: 40px;
-            flex-shrink: 0;
-            max-width: 500px;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scrollspy Example</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* ABOUT 섹션 */
+    .about-section {
+      display: flex;
+      align-items: flex-start;
+      padding: 40px;
+      flex-shrink: 0;
+      max-width: 500px;
 
-            position: fixed;
-            /* 화면 기준 고정 */
-            transform: translateY(50%);
-            /* 중앙 정렬 */
-            
-     
-        }
-
-        .about-text {
-            writing-mode: vertical-rl;
-            transform: rotate(180deg);
-            font-size: 100px;
-            font-weight: bold;
-            margin-right: 30px;
-        }
-
-        .about-content {
-            max-width: 600px;
-            
-        }
-
-        .about-content h3 {
-            margin-top: 10%;
-        }
+      position: fixed;
+      /* 화면 기준 고정 */
+      transform: translateY(50%);
+      /* 중앙 정렬 */
 
 
-        .all-container-div {
-            display: flex;
-            flex-direction: row;
-            /* 오른쪽 -> 왼쪽 */
-            justify-content: center;
-            align-items: flex-start;
-            flex-wrap: nowrap;
-            gap: 20px;
-            /* 아이템 간 간격 */
-        }
-
-        .about-div,
-        .main-div,
-        .scroll-div {
-            flex: 33%;
-            /* 균등 배치 */
-        }
-
-
-
-        .scroll-div-child {
-            position: fixed;
-            /* 화면 기준 고정 */
-            transform: translateY(100%);
-            /* 중앙 정렬 */
-            width: 80%;
-            /* 필요에 따라 너비 조정 */
-
-        }
-
-        .list-group-item {
-            border-left: 1px solid transparent;
-            border-right: 1px solid transparent;
-            border-top: 1px solid black;
-            border-bottom: 1px solid black;
-            border-radius: 0 !important;
-            /* 모든 항목 기본적으로 네모 */
-
-            font-size: 20px;
-
-        }
-
-        
-
-
-        /* Slideshow container */
-
-.mySlides {
-      display: none;
     }
+
+    .about-text {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-size: 100px;
+      font-weight: bold;
+      margin-right: 30px;
+    }
+
+    .about-content {
+      max-width: 600px;
+
+    }
+
+    .about-content h3 {
+      margin-top: 10%;
+    }
+
+
+    .all-container-div {
+      display: flex;
+      flex-direction: row;
+      /* 오른쪽 -> 왼쪽 */
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: nowrap;
+      gap: 20px;
+      /* 아이템 간 간격 */
+    }
+
+    .about-div {
+      flex: 30%;
+    }
+
+    .main-div,
+    .scroll-div {
+      flex: 35%;
+      /* 균등 배치 */
+    }
+
+
+
+    .scroll-div-child {
+      position: fixed;
+      /* 화면 기준 고정 */
+      transform: translateY(100%);
+      /* 중앙 정렬 */
+      width: 80%;
+      /* 필요에 따라 너비 조정 */
+
+    }
+
+    .list-group-item {
+      border-left: 1px solid transparent;
+      border-right: 1px solid transparent;
+      border-top: 1px solid black;
+      border-bottom: 1px solid black;
+      border-radius: 0 !important;
+      /* 모든 항목 기본적으로 네모 */
+
+      font-size: 20px;
+
+    }
+
+
+
+
+    /* Slideshow container */
+
+    .mySlides {
+      display: none;
+      position: relative;
+      transform: translateY(15%);
+
+    }
+
     img {
       vertical-align: middle;
     }
@@ -100,7 +107,15 @@
       max-width: 100%;
       position: relative;
       margin: auto;
+      max-width: 400px;
+      /* 원하는 슬라이드 너비 */
+      height: 83vh;
+      /* 선택적으로 높이도 지정 가능 */
+      overflow: visible;
+
     }
+
+
 
     /* Next & previous buttons */
     .prev,
@@ -108,15 +123,18 @@
       cursor: pointer;
       position: absolute;
       top: 50%;
-      width: auto;
-      padding: 16px;
-      margin-top: -22px;
+      width: 40px;
+      height: 40px;
+      text-align:center;
+      line-height:40px;
+      margin-top: -20px;
       color: black;
       font-weight: bold;
       font-size: 18px;
       transition: 0.6s ease;
       border-radius: 0 3px 3px 0;
       user-select: none;
+      
     }
 
     /* Position the "next button" to the right */
@@ -130,6 +148,17 @@
     .next:hover {
       background-color: rgba(0, 0, 0, 0.6);
     }
+
+    .prev {
+      left: -20px;
+      /* 왼쪽에서 더 바깥으로 밀기 */
+    }
+
+    .next {
+      right: -20px;
+      /* 오른쪽에서 더 바깥으로 밀기 */
+    }
+
 
 
     /* Caption text */
@@ -168,125 +197,124 @@
     .dot:hover {
       background-color: #717171;
     }
-
-
-    </style>
+  </style>
 </head>
 
 <body>
-    
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <div class="all-container-div">
-        <div class="about-div">
-            <!-- 왼쪽 ABOUT 섹션 -->
-            <div class="about-section">
-                <div class="about-text">ABOUT</div>
-                <div class="about-content">
-                    <h3>My favorite<br/> 🎵 is . . .
-                    </h3>
-                </div>
-            </div>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <div class="all-container-div">
+    <div class="about-div">
+      <!-- 왼쪽 ABOUT 섹션 -->
+      <div class="about-section">
+        <div class="about-text">ABOUT</div>
+        <div class="about-content">
+          <h3>My favorite<br /> 🎵 is . . .
+          </h3>
         </div>
+      </div>
+    </div>
 
-        <!-- 중앙 메인 섹션 -->
-        <div class="main-div">
-            <!-- 여기부터 슬라이드바 !! -->
+    <!-- 중앙 메인 섹션 -->
+    <div class="main-div">
+      <!-- 여기부터 슬라이드바 !! -->
 
-    <div class="slideshow-container">
-        
-        <div class="mySlides fade">
+      <div class="slideshow-container">
+
+        <div class="mySlides">
           <div class="numbertext">1 / 3</div>
-          <img src="/PRISM/src/cjy - img/음악1.jpeg" style="width: 100%; height: 600px" />
-          <div class="text">Caption Text</div>
+          <img src="../../src/cjy - img/music1.jpeg" style="width: 100%; height: 600px" />
+          <div class="text" style="color: black;">감성 R&B를 좋아하는데<br />d4vd 목소리는 물론 멜로디가 예술입니다</div>
         </div>
-  
-        <div class="mySlides fade">
+
+        <div class="mySlides">
           <div class="numbertext">2 / 3</div>
-          <img src="/PRISM/src/cjy - img/음악2.jpeg" style="width: 100%; height: 600px" />
-          <div class="text">Caption Two</div>
+          <img src="../../src/cjy - img/music2.jpeg" style="width: 100%; height: 600px" />
+          <div class="text" style="color: black;">Caption Two</div>
         </div>
-  
-        <div class="mySlides fade">
+
+        <div class="mySlides">
           <div class="numbertext">3 / 3</div>
-          <img src="/PRISM/src/cjy - img/음악3.jpeg" style="width: 100%; height: 600px" />
-          <div class="text">Caption Three</div>
+          <img src="../../src/cjy - img/music3.jpeg" style="width: 100%; height: 600px" />
+          <div class="text" style="color: black;">이 노래는 멜로디가 포근해<br />겨울에 들어보시는걸 꼭 추천합니다 ☃️❄️</div>
         </div>
-  
+
         <a class="prev" onclick="plusSlides(-1)">❮</a>
         <a class="next" onclick="plusSlides(1)">❯</a>
       </div>
       <br />
-  
+
       <div style="text-align: center">
         <span class="dot" onclick="currentSlide(1)"></span>
         <span class="dot" onclick="currentSlide(2)"></span>
         <span class="dot" onclick="currentSlide(3)"></span>
       </div>
-        </div>
+    </div>
 
-        <!-- 오른쪽 스크롤 섹션 -->
-        <div class="scroll-div">
-            <div class="scroll-div-child">
+    <!-- 오른쪽 스크롤 섹션 -->
+    <div class="scroll-div">
+      <div class="scroll-div-child">
 
-                <div class="flex-grow-1 p-4">
-                    <div class="row">
-                        <div class="col-4">
-                            <div id="list-example" class="list-group">
-                                <a class="list-group-item list-group-item-action" href="/PRISM/member/jungyoon/jungyoon.html">Jungyoon</a>
-                                <a class="list-group-item list-group-item-action" href="/PRISM/member/jungyoon/hobby.html">Hobby</a>
-                                <a class="list-group-item list-group-item-action" href="/PRISM/member/jungyoon/hamster.html">My 🐹</a>
-                                <a class="list-group-item list-group-item-action" href="/PRISM/member/jungyoon/cat.html">Like 🐈</a>
-                                <a class="list-group-item list-group-item-action" href="/PRISM/member/jungyoon/song.html">Song 🎶</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="flex-grow-1 p-4">
+          <div class="row">
+            <div class="col-4">
+              <div id="list-example" class="list-group">
+                <a class="list-group-item list-group-item-action"
+                  href="../../member/jungyoon/jungyoon.html">Jungyoon</a>
+                <a class="list-group-item list-group-item-action" href="../../member/jungyoon/hobby.html">Hobby</a>
+                <a class="list-group-item list-group-item-action" href="../../member/jungyoon/hamster.html">My 🐹</a>
+                <a class="list-group-item list-group-item-action" href="../../member/jungyoon/cat.html">Like 🐈</a>
+                <a class="list-group-item list-group-item-action" href="../../member/jungyoon/song.html">Song 🎶</a>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-    </div>
-    </div>
+  </div>
+  </div>
+  </div>
 
 
-    
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    let slideIndex = 1;
-    showSlides(slideIndex);
 
-    function plusSlides(n) {
-      showSlides(slideIndex += n);
-    }
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      let slideIndex = 1;
+      showSlides(slideIndex);
 
-    function currentSlide(n) {
-      showSlides(slideIndex = n);
-    }
-
-    function showSlides(n) {
-      let i;
-      let slides = document.getElementsByClassName("mySlides");
-      let dots = document.getElementsByClassName("dot");
-      if (n > slides.length) { slideIndex = 1 }
-      if (n < 1) { slideIndex = slides.length }
-      for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
+      function plusSlides(n) {
+        showSlides(slideIndex += n);
       }
-      for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
-      }
-      slides[slideIndex - 1].style.display = "block";
-      if (dots[slideIndex - 1]) {
-        dots[slideIndex - 1].className += " active";
-      }
-    }
 
-    // 버튼에서도 사용할 수 있게 global로 연결
-    window.plusSlides = plusSlides;
-    window.currentSlide = currentSlide;
-  });
-</script>
+      function currentSlide(n) {
+        showSlides(slideIndex = n);
+      }
+
+      function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("dot");
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+        for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        if (dots[slideIndex - 1]) {
+          dots[slideIndex - 1].className += " active";
+        }
+      }
+
+      // 버튼에서도 사용할 수 있게 global로 연결
+      window.plusSlides = plusSlides;
+      window.currentSlide = currentSlide;
+    });
+  </script>
 
 </body>
 
