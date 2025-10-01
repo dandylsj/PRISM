@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrollspy Example</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* ABOUT 섹션 */
+        .about-section {
+            display: flex;
+            align-items: flex-start;
+            padding: 40px;
+            flex-shrink: 0;
+            max-width: 500px;
+
+            position: fixed;
+            /* 화면 기준 고정 */
+            transform: translateY(50%);
+            /* 중앙 정렬 */
+            
+     
+        }
+
+        .about-text {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-size: 100px;
+            font-weight: bold;
+            margin-right: 30px;
+        }
+
+        .about-content {
+            max-width: 600px;
+            
+        }
+
+        .about-content h3 {
+            margin-top: 10%;
+        }
+
+
+        .all-container-div {
+            display: flex;
+            flex-direction: row;
+            /* 오른쪽 -> 왼쪽 */
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: nowrap;
+            gap: 20px;
+            /* 아이템 간 간격 */
+        }
+
+        .about-div,
+        .main-div,
+        .scroll-div {
+            flex: 33%;
+            /* 균등 배치 */
+        }
+
+
+
+        .scroll-div-child {
+            position: fixed;
+            /* 화면 기준 고정 */
+            transform: translateY(100%);
+            /* 중앙 정렬 */
+            width: 80%;
+            /* 필요에 따라 너비 조정 */
+
+        }
+
+        .list-group-item {
+            border-left: 1px solid transparent;
+            border-right: 1px solid transparent;
+            border-top: 1px solid black;
+            border-bottom: 1px solid black;
+            border-radius: 0 !important;
+            /* 모든 항목 기본적으로 네모 */
+
+            font-size: 20px;
+
+        }
+
+        
+    </style>
+</head>
+
+<body>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <div class="all-container-div">
+        <div class="about-div">
+            <!-- 왼쪽 ABOUT 섹션 -->
+            <div class="about-section">
+                <div class="about-text">ABOUT</div>
+                <div class="about-content">
+                    <h3>My hobby is<br/>
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- 중앙 메인 섹션 -->
+        <div class="main-div">
+            <div>
+                <div><img src="/PRISM/src/cjy - img/해방촌.png" alt="" width="100%"></div>
+                <div><p style="font-size: 25px;">노을 뷰가 예쁜 곳이나 자연 풍경을 보며 힐링하는 것을 좋아합니다 !</p></div>
+            </div>
+        </div>
+
+        <!-- 오른쪽 스크롤 섹션 -->
+        <div class="scroll-div">
+            <div class="scroll-div-child">
+
+                <div class="flex-grow-1 p-4">
+                    <div class="row">
+                        <div class="col-4">
+                            <div id="list-example" class="list-group">
+                                <a class="list-group-item list-group-item-action" href="/PRISM/member/jungyoon/jungyoon.html">Jungyoon</a>
+                                <a class="list-group-item list-group-item-action" href="/PRISM/member/jungyoon/hobby.html">Hobby</a>
+                                <a class="list-group-item list-group-item-action" href="/PRISM/member/jungyoon/hamster.html">My 🐹</a>
+                                <a class="list-group-item list-group-item-action" href="/PRISM/member/jungyoon/cat.html">Like 🐈</a>
+                                <a class="list-group-item list-group-item-action" href="/PRISM/member/jungyoon/song.html">Song 🎶</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+</body>
+
+</html>
