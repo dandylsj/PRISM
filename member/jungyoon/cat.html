@@ -20,8 +20,8 @@
             /* 화면 기준 고정 */
             transform: translateY(50%);
             /* 중앙 정렬 */
-            
-     
+
+
         }
 
         .about-text {
@@ -34,7 +34,7 @@
 
         .about-content {
             max-width: 600px;
-            
+
         }
 
         .about-content h3 {
@@ -53,13 +53,15 @@
             /* 아이템 간 간격 */
         }
 
-        .about-div,
-        .main-div,
-        .scroll-div {
-            flex: 33%;
-            /* 균등 배치 */
+        .about-div {
+            flex: 30%;
         }
 
+        .main-div,
+        .scroll-div {
+            flex: 35%;
+            /* 균등 배치 */
+        }
 
 
         .scroll-div-child {
@@ -84,7 +86,9 @@
 
         }
 
-        
+         .pic1 {
+            margin: 50px auto;
+        }
     </style>
 </head>
 
@@ -98,7 +102,7 @@
             <div class="about-section">
                 <div class="about-text">ABOUT</div>
                 <div class="about-content">
-                    <h3>I like<br/> cat !
+                    <h3>I like<br /> cat !
                     </h3>
                 </div>
             </div>
@@ -106,7 +110,45 @@
 
         <!-- 중앙 메인 섹션 -->
         <div class="main-div">
-            <img src="/PRISM/src/cjy - img/노을1.jpeg" class="rounded mx-auto d-block" alt="..." width="600px" height="2000px">
+
+            <div class="pic1">
+                <div><img src="../../src/cjy - img/cat2.jpeg" alt="" width="95%"></div>
+                <div>
+                    <p style="font-size: 22px; text-align: center;">고양이도 너무 좋아합니다 ㅋㅅㅋ</p>
+                </div>
+            </div>
+
+            <div class="pic1">
+                <div><img src="../../src/cjy - img/cat1.jpeg" alt="" width="95%"></div>
+                <div>
+                    <p style="font-size: 22px; text-align: center;">하루종일 놀고 제 품에서<br/>골골송 부르다가 잠든 하울이입니다</p>
+                </div>
+            </div>
+
+            
+
+             <div class="pic1">
+                <div><img src="../../src/cjy - img/sam1.jpeg" alt="" width="95%"></div>
+                <div>
+                    <p style="font-size: 22px; text-align: center;">하이파이브 하는 삼식</p>
+                </div>
+            </div>
+
+            <div class="pic1">
+                <div><img src="../../src/cjy - img/sam2.jpeg" alt="" width="95%"></div>
+                <div>
+                    <p style="font-size: 22px; text-align: center;">(냠냠)</p>
+                </div>
+            </div>
+
+            <div class="pic1">
+                <div><img src="../../src/cjy - img/sam3.jpeg" alt="" width="95%"></div>
+                <div>
+                    <p style="font-size: 22px; text-align: center;">맛잇다냥 ~ 🖤</p>
+                </div>
+            </div>
+
+
         </div>
 
         <!-- 오른쪽 스크롤 섹션 -->
@@ -117,11 +159,16 @@
                     <div class="row">
                         <div class="col-4">
                             <div id="list-example" class="list-group">
-                                <a class="list-group-item list-group-item-action" href="/PRISM/member/jungyoon/jungyoon.html">Jungyoon</a>
-                                <a class="list-group-item list-group-item-action" href="/PRISM/member/jungyoon/hobby.html">Hobby</a>
-                                <a class="list-group-item list-group-item-action" href="/PRISM/member/jungyoon/hamster.html">My 🐹</a>
-                                <a class="list-group-item list-group-item-action" href="/PRISM/member/jungyoon/cat.html">Like 🐈</a>
-                                <a class="list-group-item list-group-item-action" href="/PRISM/member/jungyoon/song.html">Song 🎶</a>
+                                <a class="list-group-item list-group-item-action"
+                                    href="../../member/jungyoon/jungyoon.html">Jungyoon</a>
+                                <a class="list-group-item list-group-item-action"
+                                    href="../../member/jungyoon/hobby.html">Hobby</a>
+                                <a class="list-group-item list-group-item-action"
+                                    href="../../member/jungyoon/hamster.html">My 🐹</a>
+                                <a class="list-group-item list-group-item-action"
+                                    href="../../member/jungyoon/cat.html">Like 🐈</a>
+                                <a class="list-group-item list-group-item-action"
+                                    href="../../member/jungyoon/song.html">Song 🎶</a>
                             </div>
                         </div>
                     </div>
