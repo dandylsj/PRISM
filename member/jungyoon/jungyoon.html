@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrollspy Example</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* ABOUT 섹션 */
+        .about-section {
+            display: flex;
+            align-items: flex-start;
+            padding: 40px;
+            flex-shrink: 0;
+            max-width: 500px;
+
+            position: fixed;
+            /* 화면 기준 고정 */
+            transform: translateY(50%);
+            /* 중앙 정렬 */
+
+
+        }
+
+        .about-text {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-size: 100px;
+            font-weight: bold;
+            margin-right: 30px;
+        }
+
+        .about-content {
+            max-width: 600px;
+
+        }
+
+        .about-content h3 {
+            margin-top: 10%;
+        }
+
+
+        .all-container-div {
+            display: flex;
+            flex-direction: row;
+            /* 오른쪽 -> 왼쪽 */
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: nowrap;
+            gap: 20px;
+            /* 아이템 간 간격 */
+        }
+
+        .about-div,
+        .main-div,
+        .scroll-div {
+            flex: 30%;
+            /* 균등 배치 */
+        }
+
+        .scroll-div-child {
+            position: fixed;
+            /* 화면 기준 고정 */
+            transform: translateY(100%);
+            /* 중앙 정렬 */
+            width: 80%;
+            /* 필요에 따라 너비 조정 */
+
+        }
+
+        .list-group-item {
+            border-left: 1px solid transparent;
+            border-right: 1px solid transparent;
+            border-top: 1px solid black;
+            border-bottom: 1px solid black;
+            border-radius: 0 !important;
+            /* 모든 항목 기본적으로 네모 */
+
+            font-size: 20px;
+
+        }
+
+
+        .main-div {
+            display: flex;
+            justify-content: center;
+            /* 가로 중앙 */
+            align-items: center;
+            /* 세로 중앙 */
+            height: 100vh;
+            /* 화면 전체 높이 설정 */
+        }
+
+        
+
+
+        .img-outside-div {
+            /* 화면 기준 고정 */
+
+            background-color: #fffde9;
+            /* 중앙 정렬 */
+
+            height: 85vh;
+            position: relative;
+
+        }
+
+
+
+
+
+
+
+        .img-div {
+            position: relative;
+            transform: translateY(10%);
+            padding: 0 20px;
+            padding-top: 30px;
+        }
+
+        .img-intro {
+            position: relative;
+            background-color: white;
+            margin-top: 100px;
+            margin: 60px 30px 30px 30px;
+            height: 35vh;
+        }
+
+        .img-intro > ul > li {
+            font-size: 20px;
+            margin: 15px 0;
+            padding: 3px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <div class="all-container-div">
+        <div class="about-div">
+            <!-- 왼쪽 ABOUT 섹션 -->
+            <div class="about-section">
+                <div class="about-text">ABOUT</div>
+                <div class="about-content">
+                    <h3>Hello !<br /> My name is<br />
+                        Choi Jungyoon </h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- 중앙 메인 섹션 -->
+        <div class="main-div">
+            <div class="img-outside-div">
+                <div class="img-div">
+                    <img src="/PRISM/src/cjy - img/셀카1.png" class="mx-auto d-block" alt="..." width="95%">
+                </div>
+
+                <div class="img-intro">
+                    <ul>
+                        <li>이름 : 최정윤</li>
+                        <li>나이 : 27</li>
+                        <li>MBTI : ISTP</li>
+                        <li>졸업 : 순천향대학교 컴퓨터소프트웨어공학과</li>
+                        <li>스파르타에서의 마음가짐 : 백문이 불여일타 !</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- 오른쪽 스크롤 섹션 -->
+        <div class="scroll-div">
+            <div class="scroll-div-child">
+
+                <div class="flex-grow-1 p-4">
+                    <div class="row">
+                        <div class="col-4">
+                            <div id="list-example" class="list-group">
+                                <a class="list-group-item list-group-item-action"
+                                    href="/PRISM/member/jungyoon/jungyoon.html">Jungyoon</a>
+                                <a class="list-group-item list-group-item-action"
+                                    href="/PRISM/member/jungyoon/hobby.html">Hobby</a>
+                                <a class="list-group-item list-group-item-action"
+                                    href="/PRISM/member/jungyoon/hamster.html">My 🐹</a>
+                                <a class="list-group-item list-group-item-action"
+                                    href="/PRISM/member/jungyoon/cat.html">Like 🐈</a>
+                                <a class="list-group-item list-group-item-action"
+                                    href="/PRISM/member/jungyoon/song.html">Song 🎶</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+</body>
+
+</html>
