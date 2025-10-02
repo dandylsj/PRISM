@@ -347,13 +347,41 @@
         });
 
         // 수정 버튼 클릭 → textarea로 변환
+        // $(document).on('click', '.modify', function () {
+        //     let commentBox = $(this).closest('.comment_box');
+        //     let fixContent = commentBox.find('.content');
+        //     let oldContent = fixContent.text();
+        //
+        //     // textarea로 교체
+        //     fixContent.replaceWith(`<textarea class="edit_content">${oldContent}</textarea>`);
+        //
+        //     // 버튼 상태 변경
+        //     $(this).text("저장").removeClass("modify").addClass("save");
+        // });
+        //
+        // // 저장 버튼 클릭 → Firestore 업데이트
+        // $(document).on('click', '.save', async function () {
+        //     let commentBox = $(this).closest('.comment_box');
+        //     let id = commentBox.data('id'); // Firestore 문서 id
+        //     let newContent = commentBox.find('.edit_content').val();
+        //
+        //     try {
+        //         await updateDoc(doc(db, "comments", id), {
+        //             content: newContent
+        //         });
+        //         alert("댓글이 수정되었습니다!");
+        //         window.location.reload();
+        //     } catch (e) {
+        //         console.error("Error updating document: ", e);
+        //     }
+        // });
         $(document).on('click', '.modify', function () {
             let commentBox = $(this).closest('.comment_box');
-            let fixContent = commentBox.find('.content');
-            let oldContent = fixContent.text();
+            let fixContent = commentBox.find('.comment_content'); // ✅ 클래스명 수정
+            let oldContent = fixContent.text().trim();
 
             // textarea로 교체
-            fixContent.replaceWith(`<textarea class="editContent">${oldContent}</textarea>`);
+            fixContent.replaceWith(`<textarea class="edit_content">${oldContent}</textarea>`);
 
             // 버튼 상태 변경
             $(this).text("저장").removeClass("modify").addClass("save");
@@ -363,14 +391,21 @@
         $(document).on('click', '.save', async function () {
             let commentBox = $(this).closest('.comment_box');
             let id = commentBox.data('id'); // Firestore 문서 id
-            let newContent = commentBox.find('.editContent').val();
+            let newContent = commentBox.find('.edit_content').val();
 
             try {
                 await updateDoc(doc(db, "comments", id), {
                     content: newContent
                 });
+
+                // textarea → div로 교체 (새로고침 안 해도 됨)
+                commentBox.find('.edit_content')
+                    .replaceWith(`<div class="comment_content">${newContent}</div>`);
+
+                // 버튼 상태도 원래대로 복구
+                $(this).text("수정").removeClass("save").addClass("modify");
+
                 alert("댓글이 수정되었습니다!");
-                window.location.reload();
             } catch (e) {
                 console.error("Error updating document: ", e);
             }
