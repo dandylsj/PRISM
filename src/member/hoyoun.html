@@ -18,6 +18,7 @@
   import { collection, addDoc, serverTimestamp, query, orderBy, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
   import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
+
   const firebaseConfig = {
     apiKey: "AIzaSyAFe97X0Jkr4nOJOuLBupft6q2_QPHff2U",
     authDomain: "sparta-87868.firebaseapp.com",
@@ -33,30 +34,42 @@
   const db = getFirestore(app);
 
 
+  // await addDoc(collection(db, "guestbook"), {
+  //   name,
+  //   content,
+  //   timestamp: serverTimestamp()
+  // });
+
+  const comments = document.getElementById("comments");
+  const showing = comments.querySelector(".showing");
+  const createBtn = document.getElementById("createBtn");
+  const nameInput = document.getElementById("name");
+  const contentInput = document.getElementById("content");
+
   // DOMContentLoaded 후 실행
   document.addEventListener("DOMContentLoaded", () => {
 
     // 방명록 섹션 생성
-    const commentsSection = document.createElement("div");
-    commentsSection.id = "comments";
-    commentsSection.style.display = "none";
-    commentsSection.innerHTML = `
-        <div class="inputs">
-          <div class="inputBox">
-            <em>이름 : </em>
-            <input type="text" id="name" placeholder="이름">
-          </div>
-          <div class="inputBox">
-            <em>내용 : </em>
-            <textarea id="content" placeholder="내용을 입력하세요"></textarea>
-          </div>
-          <button id="createBtn">작성</button>
-        </div>
-        <div class="showing"></div>
-      `;
-    document.body.appendChild(commentsSection);
+    // const commentsSection = document.createElement("div");
+    // commentsSection.id = "comments";
+    // commentsSection.style.display = "none";
+    // commentsSection.innerHTML = `
+    //     <div class="inputs">
+    //       <div class="inputBox">
+    //         <em>이름 : </em>
+    //         <input type="text" id="name" placeholder="이름">
+    //       </div>
+    //       <div class="inputBox">
+    //         <em>내용 : </em>
+    //         <textarea id="content" placeholder="내용을 입력하세요"></textarea>
+    //       </div>
+    //       <button id="createBtn">작성</button>
+    //     </div>
+    //     <div class="showing"></div>
+    //   `;
+    // document.body.appendChild(commentsSection);
 
-    const showing = commentsSection.querySelector(".showing");
+    const showing = comments.querySelector(".showing");
     const createBtn = document.getElementById("createBtn");
 
     // 댓글 불러오기
@@ -71,7 +84,7 @@
         box.innerHTML = `
       <div class="comment_item">
         <p class="name">${data.name}</p>
-        <em class="date">${new Date(data.timestamp.seconds * 1000).toLocaleString()}</em>
+        <em class="date">${new Date(data.timestamp?.seconds * 1000 || Date.now()).toLocaleString()}</em>
         <p class="content">${data.content}</p>
       </div>
       <div class="button">
@@ -95,7 +108,7 @@
         await addDoc(collection(db, "guestbook"), {
           name,
           content,
-          timestamp: new Date()
+          timestamp: serverTimestamp()
         });
         nameInput.value = "";
         contentInput.value = "";
@@ -105,14 +118,12 @@
       }
     });
 
-
-
     loadComments();
 
     // 스크롤 맨 아래 감지
     window.addEventListener("scroll", () => {
       if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 5) {
-        commentsSection.style.display = "block";
+        comments.style.display = "block";
       }
     });
   });
@@ -519,15 +530,17 @@
   }
 
   .comment_box {
-    background: #222;
+    background: rgba(199, 140, 140, 0.6);
     padding: 15px;
     border-radius: 5px;
     display: flex;
     justify-content: space-between;
+    color: black;
   }
 
   .comment_item {
     width: 70%;
+    color: black;
   }
 
   .button button {
@@ -538,8 +551,6 @@
     cursor: pointer;
     padding: 5px 10px;
   }
-
-
 
   /* link section */
   #links {
@@ -665,7 +676,6 @@
   </div>
 
 
-
   <!-- 깃허브 / Velog 링크 -->
   <div id="links">
     <a href="https://github.com/shinhoyoun" target="_blank">GitHub</a>
@@ -674,11 +684,7 @@
 
 
   <script>
-    const commentsSection = document.getElementById("comments");
-    const showing = commentsSection.querySelector(".showing");
-    const createBtn = document.getElementById("createBtn");
-    const nameInput = document.getElementById("name");
-    const contentInput = document.getElementById("content");
+
 
 
     let width = 0;
