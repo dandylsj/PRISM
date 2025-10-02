@@ -327,7 +327,7 @@
             let content = row['content'];
             let date = row['date'].toDate().toLocaleString();
 
-            let temp_html = `<div class="comment" data-id="${id}">
+            let temp_html = `<div class="comment_box" data-id="${id}">
                 <div class="comment_header">
                     <div class="comment_item">
                         <p class="comment_name">${name}</p>
@@ -342,7 +342,6 @@
                     </div>
                 </div>
             </div>`;
-
 
             $('#comment_show').append(temp_html);
         });
@@ -513,21 +512,21 @@
     <div class="comment_list" id="comment_show">
         <div id="comment_list">
             <!-- 예시 댓글 -->
-            <div class="comment" data-id="${id}">
-                <div class="comment_header">
-                    <div class="comment_item">
-                        <p class="comment_name">이름</p>
-                        <p class="comment_date">날짜</p>
-                        <div class="comment_content">
-                            여기에 내용?
-                        </div>
-                    </div>
-                    <div class="button">
-                        <button class="modify" type="button">수정</button>
-                        <button class="delete" type="button">삭제</button>
-                    </div>
-                </div>
-            </div>
+            <!--            <div class="comment" data-id="${id}">-->
+            <!--                <div class="comment_header">-->
+            <!--                    <div class="comment_item">-->
+            <!--                        <p class="comment_name">이름</p>-->
+            <!--                        <p class="comment_date">날짜</p>-->
+            <!--                        <div class="comment_content">-->
+            <!--                            여기에 내용?-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                    <div class="button">-->
+            <!--                        <button class="modify" type="button">수정</button>-->
+            <!--                        <button class="delete" type="button">삭제</button>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </div>-->
         </div>
     </div>
 </section>
