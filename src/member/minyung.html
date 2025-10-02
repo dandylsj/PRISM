@@ -650,7 +650,6 @@ href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
         
         // 이벤트 바인딩
         document.querySelectorAll(".delete").forEach(btn => {
-            console.log(btn)
             btn.addEventListener("click", () => deleteComment(btn.dataset.id));
         });
         
