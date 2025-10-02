@@ -19,22 +19,23 @@
     }
 
     #introduce {
-        background-color: #101010;  /* 배경 색 (검정 or 다른 컬러) */
-        color: #ddd;             /* 글자 색 */
+        background-color: #101010; /* 배경 색 (검정 or 다른 컬러) */
+        color: #ddd; /* 글자 색 */
         padding: 80px 210px;
         text-align: left;
     }
 
     .introduce_container {
         display: flex;
-        justify-content: center;   /* 전체 가운데 정렬 */
-        align-items: center;       /* 텍스트와 이미지 수직 가운데 정렬 */
-        gap: 20px;                 /* 텍스트와 이미지 간격 */
+        justify-content: center; /* 전체 가운데 정렬 */
+        align-items: center; /* 텍스트와 이미지 수직 가운데 정렬 */
+        gap: 20px; /* 텍스트와 이미지 간격 */
         max-width: 1200px;
         margin: 0 auto;
     }
+
     .introduce_text {
-        flex: 1;                   /* 텍스트 영역 자동 확장 */
+        flex: 1; /* 텍스트 영역 자동 확장 */
     }
 
     #introduce h1 {
@@ -152,6 +153,107 @@
         margin: 20px 0;
     }
 
+    /* comment */
+    /* 댓글 하나 */
+    .comment {
+        background: #1a1a1a;
+        border: 1px solid #333;
+        border-radius: 10px;
+        padding: 15px 20px;
+        color: #ddd;
+        font-size: 1rem;
+    }
+
+    .comments_container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        text-align: left;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    /* input, textarea */
+    .comments_container input, .comments_container textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #444;
+        background: #222;
+        color: white;
+        resize: none;
+    }
+
+    /* 작성 버튼 */
+    .button_row {
+        display: flex;
+        justify-content: flex-end; /* 오른쪽 정렬 */
+    }
+
+    /* 댓글 헤더 (이름 + 날짜 + 버튼들) */
+    .comment_header {
+        display: flex;
+        justify-content: space-between; /* 이름/날짜 왼쪽, 버튼 오른쪽 */
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+
+    /* 이름 + 날짜 묶음 */
+    .comment_item {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+
+    .comment_name {
+        font-weight: bold;
+        font-size: 1.1rem;
+        color: #88aacf; /* 포인트 컬러 */
+        margin: 0;
+    }
+
+    .comment_date {
+        font-size: 0.85rem;
+        color: #aaa;
+        margin: 0;
+    }
+
+    /* 내용 */
+    .comment_content {
+        background: #222;
+        padding: 12px;
+        border-radius: 8px;
+        line-height: 1.5;
+        color: #ddd;
+    }
+
+    /* 버튼 영역 */
+    .comment_header .button {
+        display: flex;
+        gap: 8px;
+    }
+
+    .comment_header .button button {
+        background: #333;
+        color: #ddd;
+        border: none;
+        border-radius: 6px;
+        padding: 5px 12px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s;
+    }
+
+    .comment_header .button button:hover {
+        background: #555;
+        transform: scale(1.05);
+    }
+
+    .comment_header .button .delete:hover {
+        background: #aa4444;
+    }
+
     footer {
         text-align: center;
         padding: 20px;
@@ -161,6 +263,136 @@
     }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="module">
+        // Firebase SDK 라이브러리 가져오기
+        import {initializeApp} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import {
+            addDoc,
+            collection,
+            deleteDoc,
+            doc,
+            getDocs,
+            getFirestore,
+            orderBy,
+            query,
+            serverTimestamp,
+            updateDoc
+        } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA0OXWG80hRqnzuEB5ytI1oxjdcHthYxoE",
+            authDomain: "sparta-a78a3.firebaseapp.com",
+            projectId: "sparta-a78a3",
+            storageBucket: "sparta-a78a3.firebasestorage.app",
+            messagingSenderId: "692256143426",
+            appId: "1:692256143426:web:a279269d0bca7c94b515db",
+            measurementId: "G-PKVDT9GBHF"
+        };
+
+        // Firebase 인스턴스 초기화
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        //쓰기
+        $("#submit_comment").click(async function () {
+            let name = $('#name').val();
+            let content = $('#content').val();
+            let date = serverTimestamp();
+
+            if (name == null || content == null) {
+                alert('이름이나 내용을 확인해주세요.');
+            } else {
+                try {
+                    let doc = {
+                        'name': name,
+                        'content': content,
+                        'date': date
+                    };
+                    await addDoc(collection(db, 'comments'), doc);
+                    alert('방명록에 글 쓰셨어요');
+                    window.location.reload();
+                } catch (e) {
+                    console.error("Error adding document: ", e);
+                }
+            }
+        })
+
+        //읽어오기
+        let docs = await getDocs(query(collection(db, "comments"), orderBy("date", "desc")));
+
+        docs.forEach((doc) => {
+            let row = doc.data();
+            let id = doc.id;
+            let name = row['name'];
+            let content = row['content'];
+            let date = row['date'].toDate().toLocaleString();
+
+            let temp_html = `<div class="comment" data-id="${id}">
+                <div class="comment_header">
+                    <div class="comment_item">
+                        <p class="comment_name">${name}</p>
+                        <p class="comment_date">${date}</p>
+                        <div class="comment_content">
+                            ${content}
+                        </div>
+                    </div>
+                    <div class="button">
+                        <button class="modify" type="button">수정</button>
+                        <button class="delete" type="button">삭제</button>
+                    </div>
+                </div>
+            </div>`;
+
+
+            $('#comment_show').append(temp_html);
+        });
+
+        // 수정 버튼 클릭 → textarea로 변환
+        $(document).on('click', '.modify', function () {
+            let commentBox = $(this).closest('.comment_box');
+            let fixContent = commentBox.find('.content');
+            let oldContent = fixContent.text();
+
+            // textarea로 교체
+            fixContent.replaceWith(`<textarea class="editContent">${oldContent}</textarea>`);
+
+            // 버튼 상태 변경
+            $(this).text("저장").removeClass("modify").addClass("save");
+        });
+
+        // 저장 버튼 클릭 → Firestore 업데이트
+        $(document).on('click', '.save', async function () {
+            let commentBox = $(this).closest('.comment_box');
+            let id = commentBox.data('id'); // Firestore 문서 id
+            let newContent = commentBox.find('.editContent').val();
+
+            try {
+                await updateDoc(doc(db, "comments", id), {
+                    content: newContent
+                });
+                alert("댓글이 수정되었습니다!");
+                window.location.reload();
+            } catch (e) {
+                console.error("Error updating document: ", e);
+            }
+        });
+
+        //삭제
+        $(document).on('click', '.delete', async function () {
+            //일치하는 comment_box 찾을 때까지 순회
+            let id = $(this).closest('.comment_box').data('id'); // 클릭한 댓글의 id
+            console.log(id);
+
+            try {
+                await deleteDoc(doc(db, "comments", id));
+            } catch (e) {
+                console.error("Error deleting document: ", e);
+            }
+            alert("댓글이 삭제되었습니다!");
+            window.location.reload();
+        });
+
+    </script>
     <script> $(function () {
         const images = [
             'https://apricot-nose-2df.notion.site/image/attachment%3Aa085e94a-a526-4791-ae10-933263fe684a%3AIMG_0190.jpeg?table=block&id=27f555a1-c11f-80df-b652-eb7c085fbe9f&spaceId=376555a1-c11f-813c-a204-000349085a2a&width=1420&userId=&cache=v2',
@@ -205,7 +437,7 @@
         <!-- 왼쪽 텍스트 -->
         <div class="introduce_text">
             <h1>Introduce</h1>
-            <h3>이준범 |  <a href="https://github.com/junbeom95-lee">github</a></h3>
+            <h3>이준범 | <a href="https://github.com/junbeom95-lee">github</a></h3>
             <p>
                 안녕하세요!<br>
                 저는 자바와 스프링에 관심이 많은 개발자 이준범입니다.<br>
@@ -215,9 +447,9 @@
         </div>
         <!-- 오른쪽 이미지 -->
         <div class="introduce_image">
-            <img src="https://apricot-nose-2df.notion.site/image/attachment%3Add5cf13a-c331-4255-8858-432c8288bf22%3Ajunbeum.jpg?table=block&id=27f555a1-c11f-8035-b633-ff9d01aa83b8&spaceId=376555a1-c11f-813c-a204-000349085a2a&width=1420&userId=&cache=v2" alt="myImage">
+            <img src="https://apricot-nose-2df.notion.site/image/attachment%3Add5cf13a-c331-4255-8858-432c8288bf22%3Ajunbeum.jpg?table=block&id=27f555a1-c11f-8035-b633-ff9d01aa83b8&spaceId=376555a1-c11f-813c-a204-000349085a2a&width=1420&userId=&cache=v2"
+                 alt="myImage">
         </div>
-
     </div>
 </section>
 <!-- Biography -->
@@ -264,6 +496,37 @@
                     <li>성함 : 달이</li>
                     <li>나이 : 4살</li>
                 </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="comment">
+    <div class="comments_container">
+        <label for="name">집사 :</label>
+        <input type="text" name="name" id="name" placeholder="이름을 적어주세요">
+        <label for="content">주인님께 한마디: </label>
+        <textarea name="content" id="content"></textarea>
+        <div class="button_row">
+            <button type="button" class="create" id="submit_comment">작성</button>
+        </div>
+    </div>
+    <div class="comment_list" id="comment_show">
+        <div id="comment_list">
+            <!-- 예시 댓글 -->
+            <div class="comment" data-id="${id}">
+                <div class="comment_header">
+                    <div class="comment_item">
+                        <p class="comment_name">이름</p>
+                        <p class="comment_date">날짜</p>
+                        <div class="comment_content">
+                            여기에 내용?
+                        </div>
+                    </div>
+                    <div class="button">
+                        <button class="modify" type="button">수정</button>
+                        <button class="delete" type="button">삭제</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
