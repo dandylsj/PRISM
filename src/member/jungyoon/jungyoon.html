@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scrollspy Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <link rel="icon" type="image/png" sizes="64x64" href="../../res/prism_favicon_64.png">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -136,61 +138,301 @@
             margin: 15px 0;
             padding: 3px 0;
         }
+
+
+
+
+        /* 방명록 CSS */
+
+        .comments {
+            width: 500px;
+            height: auto;
+            margin: 0 auto;
+            position: relative;
+            left: -35px;
+            margin-bottom: 100px;
+        }
+
+        .comments .inputs {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 20px;
+            color: #000;
+        }
+
+        .comments .inputs input,
+        textarea {
+            color: #111;
+        }
+
+        .comments .inputs .inputBox {
+            width: 100%;
+            color: black;
+        }
+
+        .comments .inputs textarea {
+            width: 100%;
+            height: 100px;
+            resize: none;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 14px;
+            overflow: hidden;
+
+        }
+
+        .comments .inputs button {
+            width: 100px;
+            height: 40px;
+            border: none;
+            border-radius: 5px;
+            background-color: #545454;
+            color: #fff;
+        }
+
+        #showing {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        #showing .comment_box {
+            width: 100%;
+            height: auto;
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 10px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 100px;
+            padding: 20px;
+            border: 1px solid black;
+        }
+
+        #showing .comment_box .comment_item {
+            width: 70%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        #showing .comment_box .button {
+            width: 25%;
+            min-width: 130px;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        #showing .comment_box .button button {
+            min-width: 60px;
+            height: 30px;
+            border: none;
+            border-radius: 5px;
+            background-color: #545454;
+            color: #fff;
+            margin-left: 10px;
+        }
+
+        .posting-intro {
+            margin-bottom: 30px;
+        }
+
+       
     </style>
+    <script type="module">
+        // Firebase SDK 라이브러리 가져오기
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc, serverTimestamp, query, orderBy, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+
+        // Firebase 구성 정보 설정
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyDEigBAYKdeVx7q7B7u5CS4bkkh6-2y_J4",
+            authDomain: "sparta-bf5a2.firebaseapp.com",
+            projectId: "sparta-bf5a2",
+            storageBucket: "sparta-bf5a2.firebasestorage.app",
+            messagingSenderId: "566331643385",
+            appId: "1:566331643385:web:783f6ccd3b145a49dc1928",
+            measurementId: "G-ZW4097G1W6"
+        };
+
+        // Firebase 인스턴스 초기화
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+
+        // 등록 클릭 
+        $("#postingbtn").click(async function () {
+            let name = $('#name').val();
+            let content = $('#content').val();
+
+            let doc = {
+                'name': name,
+                'content': content,
+                createdAt: serverTimestamp()
+            };
+            await addDoc(collection(db, "postings"), doc);
+            alert('저장 완료!');
+            window.location.reload();
+        });
+
+
+        // 수정 클릭
+        $(document).on("click", ".modify", function () {
+            const $commentBox = $(this).closest(".comment_box");
+            const contentEl = $commentBox.find(".content");
+            const originalText = contentEl.text();
+
+            // 이미 textarea 상태면 중복 클릭 방지
+            if ($commentBox.find("textarea.edit-content").length > 0) return;
+
+            // textarea로 교체
+            const textarea = `<textarea class="edit-content" style="width: 100%; height: 100px;">${originalText}</textarea>`;
+            contentEl.replaceWith(textarea);
+
+            // 저장 버튼 생성
+            const saveBtn = `<button class="save" type="button" data-id="${$(this).data("id")}">저장</button>`;
+            $(this).after(saveBtn);  // 수정 버튼 뒤에 붙임
+            $(this).hide(); // 수정 버튼 숨기기
+        });
+        
+
+        // 저장 버튼 클릭
+        $(document).on("click", ".save", async function () {
+            const docId = $(this).data("id");
+            const $commentBox = $(this).closest(".comment_box");
+            const newContent = $commentBox.find("textarea.edit-content").val();
+
+            try {
+                await updateDoc(doc(db, "postings", docId), {
+                    content: newContent
+                });
+
+                alert("수정 완료!");
+                window.location.reload();
+            } catch (error) {
+                console.error("수정 오류:", error);
+                alert("수정 중 오류가 발생했습니다.");
+            }
+        });
+
+
+        // 삭제 클릭 이벤트 - 동적 요소는 이벤트 위임 필수!
+        $(document).on("click", ".delete", async function () {
+            const docId = $(this).data("id");
+
+            if (confirm("정말 삭제하시겠습니까?")) {
+                try {
+                    await deleteDoc(doc(db, "postings", docId));
+                    alert("삭제 완료!");
+                    window.location.reload();
+                } catch (error) {
+                    console.error("문서 삭제 오류:", error);
+                }
+            }
+        });
+
+
+        // 방명록 붙이기 코드 
+        const beforeDocs = collection(db, "postings");
+        const q = query(beforeDocs, orderBy("createdAt", "desc"));
+        let docs = await getDocs(q);
+        docs.forEach((doc) => {
+            let row = doc.data();
+
+            let name = row['name'];
+            let content = row['content'];
+            let createdAt = row['createdAt'];
+            let formattedDate = createdAt?.toDate().toLocaleString('ko-KR');
+
+            let temp_html = `
+            <div class="comment_box">
+                <div class="comment_item">
+                    <p class="name">${name}</p>
+                    <em class="date">${formattedDate}</em>
+                    <p class="content">${content}</p>
+                </div>
+                <div class="button">
+                    <button class="modify" type="button" data-id="${doc.id}">수정</button>
+                    <button class="delete" type="button" data-id="${doc.id}">삭제</button>
+                </div>
+            </div>`;
+
+            $('#showing').append(temp_html);
+        });
+
+    </script>
 </head>
 
 <body>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <div class="all-container-div">
-        <div class="about-div">
-            <!-- 왼쪽 ABOUT 섹션 -->
-            <div class="about-section">
-                <div class="about-text">ABOUT</div>
-                <div class="about-content">
-                    <h3>Hello !<br /> My name is<br />
-                        Choi Jungyoon </h3>
+    <div class="full-frame">
+        <div class="all-container-div">
+            <div class="about-div">
+                <!-- 왼쪽 ABOUT 섹션 -->
+                <div class="about-section">
+                    <div class="about-text">ABOUT</div>
+                    <div class="about-content">
+                        <h3>Hello !<br /> My name is<br />
+                            Choi Jungyoon </h3>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- 중앙 메인 섹션 -->
-        <div class="main-div">
-            <div class="img-outside-div">
-                <div class="img-div">
-                    <img src="../../res/cjy - img/selfie1.png" class="mx-auto d-block" alt="..." width="95%">
-                </div>
+            <!-- 중앙 메인 섹션 -->
+            <div class="main-div">
+                <div class="img-outside-div">
+                    <div class="img-div">
+                        <img src="../../res/cjy - img/selfie1.png" class="mx-auto d-block" alt="..." width="95%">
+                    </div>
 
-                <div class="img-intro">
-                    <ul>
-                        <li>이름 : 최정윤</li>
-                        <li>나이 : 27</li>
-                        <li>MBTI : ISTP</li>
-                        <li>졸업 : 순천향대학교 컴퓨터소프트웨어공학과</li>
-                        <li>스파르타에서의 마음가짐 : 백문이 불여일타 !</li>
-                    </ul>
+                    <div class="img-intro">
+                        <ul>
+                            <li>이름 : 최정윤</li>
+                            <li>나이 : 27</li>
+                            <li>MBTI : ISTP</li>
+                            <li>졸업 : 순천향대학교 컴퓨터소프트웨어공학과</li>
+                            <li>스파르타에서의 마음가짐 : 백문이 불여일타 !</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- 오른쪽 스크롤 섹션 -->
-        <div class="scroll-div">
-            <div class="scroll-div-child">
+            <!-- 오른쪽 스크롤 섹션 -->
+            <div class="scroll-div">
+                <div class="scroll-div-child">
 
-                <div class="flex-grow-1 p-4">
-                    <div class="row">
-                        <div class="col-4">
-                            <div id="list-example" class="list-group">
-                                <a class="list-group-item list-group-item-action"
-                                    href="./jungyoon.html">Jungyoon</a>
-                                <a class="list-group-item list-group-item-action"
-                                    href="./hobby.html">Hobby</a>
-                                <a class="list-group-item list-group-item-action"
-                                    href="./hamster.html">My 🐹</a>
-                                <a class="list-group-item list-group-item-action"
-                                    href="./cat.html">Like 🐈</a>
-                                <a class="list-group-item list-group-item-action"
-                                    href="./song.html">Song 🎶</a>
+                    <div class="flex-grow-1 p-4">
+                        <div class="row">
+                            <div class="col-4">
+                                <div id="list-example" class="list-group">
+                                    <a class="list-group-item list-group-item-action"
+                                        href="./jungyoon.html">Jungyoon</a>
+                                    <a class="list-group-item list-group-item-action" href="./hobby.html">Hobby</a>
+                                    <a class="list-group-item list-group-item-action" href="./hamster.html">My 🐹</a>
+                                    <a class="list-group-item list-group-item-action" href="./cat.html">Like 🐈</a>
+                                    <a class="list-group-item list-group-item-action" href="./song.html">Song 🎶</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -199,6 +441,25 @@
         </div>
     </div>
     </div>
+    </div>
+
+    <div class="comments">
+        <div class="posting-intro">
+            <h3>방명록을 작성해보세요 ! 🤓</h3>
+        </div>
+        <div class="inputs">
+            <div class="inputBox">
+                <em>이름 : </em>
+                <input type="text" name="name" id="name" placeholder="이름">
+            </div>
+            <div class="inputBox">
+                <textarea name="content" id="content" placeholder="내용을 입력하세요"></textarea>
+            </div>
+            <button id="postingbtn" type="button" class="create">등록</button>
+        </div>
+        <div id="showing">
+
+        </div>
     </div>
 </body>
 
