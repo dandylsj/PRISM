@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scrollspy Example</title>
-    <link rel="icon" type="image/png" sizes="64x64" href="../../src/prism_favicon_64.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="../../res/prism_favicon_64.png">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -35,6 +35,7 @@
 
         .about-content {
             max-width: 600px;
+
         }
 
         .about-content h3 {
@@ -63,7 +64,6 @@
             /* 균등 배치 */
         }
 
-
         .scroll-div-child {
             position: fixed;
             /* 화면 기준 고정 */
@@ -86,12 +86,56 @@
 
         }
 
-        .pic1 {
-            margin: 50px auto;
-        }
-        
 
-       
+        .main-div {
+            display: flex;
+            justify-content: center;
+            /* 가로 중앙 */
+            align-items: center;
+            /* 세로 중앙 */
+            height: 100vh;
+            /* 화면 전체 높이 설정 */
+        }
+
+
+
+        .img-outside-div {
+            /* 화면 기준 고정 */
+
+            background-color: #fffde9;
+            /* 중앙 정렬 */
+
+            height: 85vh;
+            position: relative;
+
+        }
+
+
+
+
+
+
+
+        .img-div {
+            position: relative;
+            transform: translateY(10%);
+            padding: 0 20px;
+            padding-top: 30px;
+        }
+
+        .img-intro {
+            position: relative;
+            background-color: white;
+            margin-top: 100px;
+            margin: 60px 30px 30px 30px;
+            height: 35vh;
+        }
+
+        .img-intro>ul>li {
+            font-size: 20px;
+            margin: 15px 0;
+            padding: 3px 0;
+        }
     </style>
 </head>
 
@@ -105,40 +149,30 @@
             <div class="about-section">
                 <div class="about-text">ABOUT</div>
                 <div class="about-content">
-                    <h3>My hobby is<br />
-                    </h3>
+                    <h3>Hello !<br /> My name is<br />
+                        Choi Jungyoon </h3>
                 </div>
             </div>
         </div>
 
         <!-- 중앙 메인 섹션 -->
         <div class="main-div">
-            <div class="pic1">
-                <div><img src="../../src/cjy - img/sunset2.jpeg" alt="" width="95%"></div>
-                <div>
-                    <p style="font-size: 22px; text-align: center;">자연 풍경을 보며 힐링하는 것을 좋아합니다</p>
+            <div class="img-outside-div">
+                <div class="img-div">
+                    <img src="../../cjy%20-%20img/selfie1.png" class="mx-auto d-block" alt="..." width="95%">
+                </div>
+
+                <div class="img-intro">
+                    <ul>
+                        <li>이름 : 최정윤</li>
+                        <li>나이 : 27</li>
+                        <li>MBTI : ISTP</li>
+                        <li>졸업 : 순천향대학교 컴퓨터소프트웨어공학과</li>
+                        <li>스파르타에서의 마음가짐 : 백문이 불여일타 !</li>
+                    </ul>
                 </div>
             </div>
-
-
-
-            <div class="pic1">
-                <div><img src="../../src/cjy - img/haebangchon.png" alt="" width="95%" height="80%"></div>
-                <div>
-                    <p style="font-size: 22px; text-align: center;">여기는 노을 뷰가 예쁜 해방촌입니다 !</p>
-                </div>
-            </div>
-
-            
-            <div class="pic1">
-                <div><img src="../../src/cjy - img/busan.jpeg" alt="" width="95%" height="80%"></div>
-                <div>
-                    <p style="font-size: 22px; text-align: center;">바다 보는 것도 좋아합니다 🌊</p>
-                </div>
-            </div>
-            
         </div>
-
         <!-- 오른쪽 스크롤 섹션 -->
         <div class="scroll-div">
             <div class="scroll-div-child">
@@ -150,13 +184,13 @@
                                 <a class="list-group-item list-group-item-action"
                                     href="../../member/jungyoon/jungyoon.html">Jungyoon</a>
                                 <a class="list-group-item list-group-item-action"
-                                    href="../../member/jungyoon/hobby.html">Hobby</a>
+                                    href="hobby.html">Hobby</a>
                                 <a class="list-group-item list-group-item-action"
-                                    href="../../member/jungyoon/hamster.html">My 🐹</a>
+                                    href="hamster.html">My 🐹</a>
                                 <a class="list-group-item list-group-item-action"
-                                    href="../../member/jungyoon/cat.html">Like 🐈</a>
+                                    href="cat.html">Like 🐈</a>
                                 <a class="list-group-item list-group-item-action"
-                                    href="../../member/jungyoon/song.html">Song 🎶</a>
+                                    href="song.html">Song 🎶</a>
                             </div>
                         </div>
                     </div>
