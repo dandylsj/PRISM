@@ -414,7 +414,55 @@ href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
       </div>
     </div>
   </main>
-  
+      <div class="comments">
+        <h2>방명록</h2>
+        <div class="inputs">
+            <div class="inputBox">
+                <em>이름 : </em>
+                <input type="text" name="name" id="name" placeholder="이름">
+            </div>
+            <div class="inputBox">
+                <em>내용을 입력하세요 </em>
+                <textarea name="content" id="content"></textarea>
+            </div>
+            <button type="button" class="create" >작성</button>
+        </div>
+        <div class="showing">
+            <div class="comment_box">
+                <div class="comment_item">
+                    <p class="name">작성자</p>
+                    <em class="date">2025-10-02</em>
+                    <p class="content">댓글 내용</p>
+                </div>
+                <div class="button">
+                    <button class="modify" type="button">수정</button>
+                    <button class="delete" type="button">삭제</button>
+                </div>
+            </div>
+            <div class="comment_box">
+                <div class="comment_item">
+                    <p class="name">작성자</p>
+                    <em class="date">2025-10-02</em>
+                    <p class="content">댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용</p>
+                </div>
+                <div class="button">
+                    <button class="modify" type="button">수정</button>
+                    <button class="delete" type="button">삭제</button>
+                </div>
+            </div>
+            <div class="comment_box">
+                <div class="comment_item">
+                    <p class="name">작성자</p>
+                    <em class="date">2025-10-02</em>
+                    <p class="content">댓글 내용</p>
+                </div>
+                <div class="button">
+                    <button class="modify" type="button">수정</button>
+                    <button class="delete" type="button">삭제</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script>
   window.addEventListener('load', function() {
@@ -443,5 +491,211 @@ href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
     }
     
   });
+</script>
+<style>
+    .comments{
+        width:900px;
+        height:auto;
+        margin:0 auto;
+    }
+    .comments h2{
+        font-size:30px;
+        font-weight:800;
+        margin-bottom:20px;
+        color:#111;
+    }
+    .comments *{
+      color:#111;
+    }
+    .comments .inputs{
+        width:100%;
+        height:auto;
+        display:flex;
+        flex-direction:column;
+        justify-content:flex-start;
+        align-items:flex-start;
+        gap:10px;
+        margin-bottom:20px;
+        color:#000;
+    }
+    .comments .inputs input, textarea{
+        color:#111;
+    }
+    .comments .inputs .inputBox{
+        width:100%;
+        color:#fff;
+    }
+    .comments .inputs textarea{
+        width:100%;
+        height:100px;
+        resize:none;
+        border:1px solid #ccc;
+        border-radius:5px;
+        padding:10px;
+        font-size:14px;
+        overflow:hidden;
+        
+    }
+    .comments .inputs button{
+        width:100px;
+        height:40px;    
+        border:none;
+        border-radius:5px;
+        background-color:#116b9f;
+        color:#fff;
+    }
+    .showing{
+        width:100%;
+        display:flex;
+        flex-direction:column;
+        justify-content:flex-start;
+        align-items:flex-start;
+        gap:10px;
+    }
+    .showing .comment_box{
+        width:100%;
+        height:auto;
+        background-color:#222;
+        border-radius:5px;
+        padding:10px;
+        display:flex;
+        flex-direction:row;
+        justify-content:space-between;
+        align-items:center;
+        gap:100px;
+        padding:20px;
+    }
+    .showing .comment_box .comment_item{
+        width:70%;
+        height:auto;
+        display:flex;
+        flex-direction:column;
+        justify-content:flex-start;
+        align-items:flex-start;
+        gap:10px;
+    }
+    .showing .comment_box .comment_item *{
+      color:#fff;
+    }
+    .showing .comment_box .button{
+        width:25%;
+        min-width:130px;
+        display:flex;
+        flex-direction:row;
+        justify-content:flex-end;
+        align-items:center;
+    }
+    .showing .comment_box .button button{
+        min-width:60px;
+        height:30px;
+        border:none;
+        border-radius:5px;
+        background-color:#116b9f;
+        color:#fff;
+        margin-left:10px;
+    }
+</style>
+<script type="module">
+    // Firebase SDK 라이브러리 가져오기
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+    import { collection, addDoc,serverTimestamp,query,orderBy,doc,updateDoc,deleteDoc  } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+    import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+    
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+    apiKey: "AIzaSyDxWGEILNzzPa5ansON3Ixcd4oKx4rXipQ",
+    authDomain: "sparta-afcce.firebaseapp.com",
+    projectId: "sparta-afcce",
+    storageBucket: "sparta-afcce.firebasestorage.app",
+    messagingSenderId: "1074775369647",
+    appId: "1:1074775369647:web:3cb75ee6a20451e3ba315a",
+    measurementId: "G-DR7WNT5L32"
+    };
+        
+    // Firebase 인스턴스 초기화
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    
+    const nameInput = document.getElementById("name");
+    const contentInput = document.getElementById("content");
+    const createButton = document.querySelector(".create");
+    const commentsContainer = document.querySelector(".showing");
+    const commentsRef = collection(db, "comments");
+    // 댓글 렌더링
+    async function render() {
+        commentsContainer.innerHTML = "";
+        const q = query(commentsRef, orderBy("createdAt", "desc"));
+        const querySnapshot = await getDocs(q);
+        
+        querySnapshot.forEach((docSnap) => {
+            const data = docSnap.data();
+            const commentBox = document.createElement("div");
+            commentBox.classList.add("comment_box");
+            
+            commentBox.innerHTML = `
+                <div class="comment_item">
+                <p class="name">${data.name}</p>
+                <em class="date">${data.createdAt?.toDate().toLocaleString() || ""}</em>
+                <p class="content">${data.content}</p>
+                </div>
+                <div class="button">
+                <button class="modify" data-id="${docSnap.id}">수정</button>
+                <button class="delete" data-id="${docSnap.id}">삭제</button>
+                </div>
+                `;
+            
+            commentsContainer.appendChild(commentBox);
+        });
+        
+        // 이벤트 바인딩
+        document.querySelectorAll(".delete").forEach(btn => {
+            console.log(btn)
+            btn.addEventListener("click", () => deleteComment(btn.dataset.id));
+        });
+        
+        document.querySelectorAll(".modify").forEach(btn => {
+            btn.addEventListener("click", () => editComment(btn.dataset.id));
+        });
+    }
+    
+    // 생성 (Create)
+    createButton.addEventListener("click", async () => {
+        const name = nameInput.value.trim();
+        const content = contentInput.value.trim();
+        if (!name || !content) return alert("이름과 내용을 입력하세요!");
+        
+        await addDoc(commentsRef, {
+            name,
+            content,
+            createdAt: serverTimestamp()
+        });
+        
+        nameInput.value = "";
+        contentInput.value = "";
+        render();
+    });
+    
+    // ✅ 수정 (Update)
+    async function editComment(id) {
+        const newContent = prompt("새 내용 입력:");
+        if (!newContent) return;
+        
+        const docRef = doc(db, "comments", id);
+        await updateDoc(docRef, { content: newContent });
+        render();
+    }
+    
+    // ✅ 삭제 (Delete)
+    async function deleteComment(id) {
+        if (!confirm("정말 삭제할까요?")) return;
+        
+        const docRef = doc(db, "comments", id);
+        await deleteDoc(docRef);
+        render();
+    }
+    
+    // ✅ 초기 실행
+    render();
 </script>
 </html>
