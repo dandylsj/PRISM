@@ -8,267 +8,381 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: url('../res/shy_asset/backpch.jpg');
-      background-size: cover;
+
+</head>
+
+<script type="module">
+  // Firebase SDK 라이브러리 가져오기
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+  import { collection, addDoc, serverTimestamp, query, orderBy, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+  import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAFe97X0Jkr4nOJOuLBupft6q2_QPHff2U",
+    authDomain: "sparta-87868.firebaseapp.com",
+    projectId: "sparta-87868",
+    storageBucket: "sparta-87868.firebasestorage.app",
+    messagingSenderId: "982179307438",
+    appId: "1:982179307438:web:3fb3988ee7d30bb533723f",
+    measurementId: "G-DQFYGREKRT"
+  };
+
+  // Firebase 인스턴스 초기화
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+
+  // DOMContentLoaded 후 실행
+  document.addEventListener("DOMContentLoaded", () => {
+
+    // 방명록 섹션 생성
+    const commentsSection = document.createElement("div");
+    commentsSection.id = "comments";
+    commentsSection.style.display = "none";
+    commentsSection.innerHTML = `
+        <div class="inputs">
+          <div class="inputBox">
+            <em>이름 : </em>
+            <input type="text" id="name" placeholder="이름">
+          </div>
+          <div class="inputBox">
+            <em>내용 : </em>
+            <textarea id="content" placeholder="내용을 입력하세요"></textarea>
+          </div>
+          <button id="createBtn">작성</button>
+        </div>
+        <div class="showing"></div>
+      `;
+    document.body.appendChild(commentsSection);
+
+    const showing = commentsSection.querySelector(".showing");
+    const createBtn = document.getElementById("createBtn");
+
+    // 댓글 불러오기
+    window.loadComments = async function () {
+      showing.innerHTML = ""; // 화면 초기화
+      const q = query(collection(db, "guestbook"), orderBy("timestamp", "desc"));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach(docSnap => {
+        const data = docSnap.data();
+        const box = document.createElement("div");
+        box.className = "comment_box";
+        box.innerHTML = `
+      <div class="comment_item">
+        <p class="name">${data.name}</p>
+        <em class="date">${new Date(data.timestamp.seconds * 1000).toLocaleString()}</em>
+        <p class="content">${data.content}</p>
+      </div>
+      <div class="button">
+        <button class="deleteBtn">삭제</button>
+      </div>
+    `;
+        // 삭제 버튼
+        box.querySelector(".deleteBtn").addEventListener("click", async () => {
+          await deleteDoc(doc(db, "guestbook", docSnap.id));
+          window.loadComments();
+        });
+        showing.appendChild(box);
+      });
     }
 
-    /* Loading */
-    #loading {
-      /* display: flex;
+    // 작성 버튼
+    createBtn.addEventListener("click", async () => {
+      const name = nameInput.value.trim();
+      const content = contentInput.value.trim();
+      if (name && content) {
+        await addDoc(collection(db, "guestbook"), {
+          name,
+          content,
+          timestamp: new Date()
+        });
+        nameInput.value = "";
+        contentInput.value = "";
+        loadComments();
+      } else {
+        alert("이름과 내용을 입력해주세요!");
+      }
+    });
+
+
+
+    loadComments();
+
+    // 스크롤 맨 아래 감지
+    window.addEventListener("scroll", () => {
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 5) {
+        commentsSection.style.display = "block";
+      }
+    });
+  });
+</script>
+
+
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('../res/shy_asset/backpch.jpg');
+    background-size: cover;
+  }
+
+  /* Loading */
+  #loading {
+    /* display: flex;
       flex-direction: column;
       align-items: center; */
 
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: black;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      z-index: 1000;
-    }
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    z-index: 1000;
+  }
 
-    .loading_p {
-      text-align: center;
-      /* width: 100%; */
-    }
+  .loading_p {
+    text-align: center;
+    /* width: 100%; */
+  }
 
-    .loading_text_top {
-      color: white;
-      margin-bottom: 30px;
-      font-size: 30px;
-    }
+  .loading_text_top {
+    color: white;
+    margin-bottom: 30px;
+    font-size: 30px;
+  }
 
-    .loading_container {
-      display: flex;
-      align-items: center;
-      width: 700px;
-      /* width: 100%; */
-      height: 30px;
-      background: black;
-      border-radius: 15px;
-      overflow: hidden;
-      margin-bottom: 30px;
-    }
+  .loading_container {
+    display: flex;
+    align-items: center;
+    width: 700px;
+    /* width: 100%; */
+    height: 30px;
+    background: black;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 30px;
+  }
 
-    .loading_icon {
-      width: 50px;
-      height: 50px;
-      margin-right: 10px;
-      /* flex-shrink: 0; */
-    }
+  .loading_icon {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    /* flex-shrink: 0; */
+  }
 
-    .loading_bar {
-      /* flex: 1; */
-      width: 0%;
-      height: 100%;
-      background: linear-gradient(90deg,
-          red,
-          orange,
-          yellow,
-          green,
-          blue,
-          indigo,
-          violet);
-      border-radius: 15px 0 0 15px;
-      transition: width 0.05s linear;
-      /* 부드럽게 채워지게 */
-      overflow: hidden;
-      /* margin: 0 auto; */
+  .loading_bar {
+    /* flex: 1; */
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        red,
+        orange,
+        yellow,
+        green,
+        blue,
+        indigo,
+        violet);
+    border-radius: 15px 0 0 15px;
+    transition: width 0.05s linear;
+    /* 부드럽게 채워지게 */
+    overflow: hidden;
+    /* margin: 0 auto; */
 
-      /* box-shadow: 0 0 600px color; */
-      /* 이걸로 셰도우넣어서 뿌옇게 빛나는? 느낌으로 후에 추가? */
-      /* hue-rotate : 원본 이미지에 대한 상대적 색조의 변화 값
+    /* box-shadow: 0 0 600px color; */
+    /* 이걸로 셰도우넣어서 뿌옇게 빛나는? 느낌으로 후에 추가? */
+    /* hue-rotate : 원본 이미지에 대한 상대적 색조의 변화 값
                             양수로 설정하여 회전하면 색조 값을 증가시키고 반대(음수)의 회전은 색조 값을 감소시킨다
                             + deg 지정 가능 */
-    }
+  }
 
-    .loading_text_bottom {
-      color: white;
-      /* margin-top: 30px; */
-      font-size: 30px;
-    }
+  .loading_text_bottom {
+    color: white;
+    /* margin-top: 30px; */
+    font-size: 30px;
+  }
 
-    .loading_text_bottom span {
-      display: inline-block;
-      animation: wave 1.5s ease-in-out infinite;
-      /* name → 실행할 @keyframes 이름
+  .loading_text_bottom span {
+    display: inline-block;
+    animation: wave 1.5s ease-in-out infinite;
+    /* name → 실행할 @keyframes 이름
             duration → 한 번 애니메이션이 실행되는 시간
             timing-function → 속도 변화 방식 (어떤 가속도로 움직일지)
             iteration-count → 반복 횟수 (infinite = 무한 반복) */
+  }
+
+  .loading_text_bottom span:nth-of-type(1) {
+    animation-delay: 0s;
+  }
+
+  .loading_text_bottom span:nth-of-type(2) {
+    animation-delay: 0.1s;
+  }
+
+  .loading_text_bottom span:nth-of-type(3) {
+    animation-delay: 0.2s;
+  }
+
+  .loading_text_bottom span:nth-of-type(4) {
+    animation-delay: 0.3s;
+  }
+
+  .loading_text_bottom span:nth-of-type(5) {
+    animation-delay: 0.4s;
+  }
+
+  .loading_text_bottom span:nth-of-type(6) {
+    animation-delay: 0.5s;
+  }
+
+  .loading_text_bottom span:nth-of-type(7) {
+    animation-delay: 0.6s;
+  }
+
+  .loading_text_bottom span:nth-of-type(8) {
+    animation-delay: 0.7s;
+  }
+
+  .loading_text_bottom span:nth-of-type(9) {
+    animation-delay: 0.8s;
+  }
+
+  .loading_text_bottom span:nth-of-type(10) {
+    animation-delay: 0.9s;
+  }
+
+  .loading_text_bottom span:nth-of-type(11) {
+    animation-delay: 1s;
+  }
+
+  .loading_text_bottom span:nth-of-type(12) {
+    animation-delay: 1.1s;
+  }
+
+  .loading_text_bottom span:nth-of-type(13) {
+    animation-delay: 1.2s;
+  }
+
+  @keyframes wave {
+
+    0%,
+    50%,
+    100% {
+      transform: translateY(0);
     }
 
-    .loading_text_bottom span:nth-of-type(1) {
-      animation-delay: 0s;
+    10%,
+    35%,
+    60%,
+    85% {
+      transform: translateY(-3px);
     }
 
-    .loading_text_bottom span:nth-of-type(2) {
-      animation-delay: 0.1s;
+    25% {
+      transform: translateY(-5px);
     }
 
-    .loading_text_bottom span:nth-of-type(3) {
-      animation-delay: 0.2s;
+    75% {
+      transform: translateY(5px);
     }
+  }
 
-    .loading_text_bottom span:nth-of-type(4) {
-      animation-delay: 0.3s;
-    }
-
-    .loading_text_bottom span:nth-of-type(5) {
-      animation-delay: 0.4s;
-    }
-
-    .loading_text_bottom span:nth-of-type(6) {
-      animation-delay: 0.5s;
-    }
-
-    .loading_text_bottom span:nth-of-type(7) {
-      animation-delay: 0.6s;
-    }
-
-    .loading_text_bottom span:nth-of-type(8) {
-      animation-delay: 0.7s;
-    }
-
-    .loading_text_bottom span:nth-of-type(9) {
-      animation-delay: 0.8s;
-    }
-
-    .loading_text_bottom span:nth-of-type(10) {
-      animation-delay: 0.9s;
-    }
-
-    .loading_text_bottom span:nth-of-type(11) {
-      animation-delay: 1s;
-    }
-
-    .loading_text_bottom span:nth-of-type(12) {
-      animation-delay: 1.1s;
-    }
-
-    .loading_text_bottom span:nth-of-type(13) {
-      animation-delay: 1.2s;
-    }
-
-    @keyframes wave {
-
-      0%,
-      50%,
-      100% {
-        transform: translateY(0);
-      }
-
-      10%,
-      35%,
-      60%,
-      85% {
-        transform: translateY(-3px);
-      }
-
-      25% {
-        transform: translateY(-5px);
-      }
-
-      75% {
-        transform: translateY(5px);
-      }
-    }
-
-    /* About 섹션 */
-    #about {
-      /* display: none;
+  /* About 섹션 */
+  #about {
+    /* display: none;
       padding: 50px; */
-      /* background-color: white; */
+    /* background-color: white; */
 
-      width: 100%;
-      min-height: 100vh;
-      position: relative;
-      overflow: hidden;
-      display: none;
-    }
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    display: none;
+    margin-bottom: 50px;
+  }
 
-    .slide {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 80%;
-      max-width: 600px;
-      min-height: 400px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 25px;
-      justify-content: flex-end;
-      opacity: 0;
-      transition: opacity 0.8s ease, transform 0.8s ease;
-      text-align: center;
-      border-radius: 15px;
-      background-color: rgba(95, 95, 95, 0.2);
-      box-shadow: 0 10px 25px black;
-      backdrop-filter: blur(10px);
-      /* background-size: cover; */
-      /* background-position: center; */
-      color: white;
-    }
+  .slide {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 600px;
+    min-height: 400px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px;
+    justify-content: flex-end;
+    opacity: 0;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    text-align: center;
+    border-radius: 15px;
+    background-color: rgba(95, 95, 95, 0.2);
+    box-shadow: 0 10px 25px black;
+    backdrop-filter: blur(10px);
+    /* background-size: cover; */
+    /* background-position: center; */
+    color: white;
+  }
 
-    .slide.active {
-      opacity: 1;
-      z-index: 10;
-      /* border-radius: 50%; */
-      /* object-fit: cover;
+  .slide.active {
+    opacity: 1;
+    z-index: 10;
+    /* border-radius: 50%; */
+    /* object-fit: cover;
       margin-bottom: 20px; */
-      transform: translate(-50%, -50%) scale(1);
-    }
+    transform: translate(-50%, -50%) scale(1);
+  }
 
-    .post_content img {
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
-      border-radius: 15px;
-      margin-bottom: 15px;
-    }
+  .post_content img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 15px;
+  }
 
-    .slide img.profile {
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 20px;
-    }
+  .slide img.profile {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+  }
 
-    .post_content {
-      /* display: flex;
+  .post_content {
+    /* display: flex;
       flex-direction: column;
       align-items: center;
       width: 100%;
       height: 100%; */
 
-      background: rgba(255, 255, 255, 0.3);
-      /* 투명하게 */
-      border-radius: 12px;
-      overflow: hidden;
-      transition: transform 0.3s ease;
-      width: 250px;
-      /* 기존 너비 유지 */
-      height: 400px;
-      /* 기존 높이 200px → 2배로 증가 */
-    }
+    background: rgba(255, 255, 255, 0.3);
+    /* 투명하게 */
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    width: 250px;
+    /* 기존 너비 유지 */
+    height: 400px;
+    /* 기존 높이 200px → 2배로 증가 */
+  }
 
-    /* .post_content img.profile {
+  /* .post_content img.profile {
       width: 90%;
       height: 300px;
       border-radius: 15px;
@@ -279,111 +393,174 @@
       margin-right: auto;
     } */
 
-    .post_text {
-      width: 100%;
-      text-align: center;
-      margin-top: auto;
-    }
+  .post_text {
+    width: 100%;
+    text-align: center;
+    margin-top: auto;
+  }
 
-    .post_text h3 {
-      font-size: 1.5rem;
-      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
-      /* margin-bottom: 5px; */
-    }
+  .post_text h3 {
+    font-size: 1.5rem;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+    /* margin-bottom: 5px; */
+  }
 
-    .post_text p {
-      font-size: 1.1rem;
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
-    }
+  .post_text p {
+    font-size: 1.1rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+  }
 
-    .slide h2 {
-      margin-bottom: 10px;
-    }
+  .slide h2 {
+    margin-bottom: 10px;
+  }
 
-    .slide p {
-      font-size: 1rem;
-    }
+  .slide p {
+    font-size: 1rem;
+  }
 
-    #about h1 {
-      text-align: center;
-      margin-bottom: 30px;
-    }
+  #about h1 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
 
-    .post_container {
-      display: flex;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px;
-      align-items: center;
-      justify-content: center;
-    }
+  .post_container {
+    display: flex;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+  }
 
-    .post_box {
-      /* background: white;
+  .post_box {
+    /* background: white;
       border-radius: 12px;
       overflow: hidden;
       transition: transform 0.3s ease; */
 
-      background: rgba(255, 255, 255, 0.3);
-      /* 투명하게 */
-      border-radius: 12px;
-      overflow: hidden;
-      transition: transform 0.3s ease;
-      width: 250px;
-      height: 400px;
-    }
+    background: rgba(255, 255, 255, 0.3);
+    /* 투명하게 */
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    width: 250px;
+    height: 400px;
+  }
 
-    .post_box:hover {
-      transform: translateY(-5px);
-    }
+  .post_box:hover {
+    transform: translateY(-5px);
+  }
 
-    .post_box img {
-      flex-grow: 1;
-      /* 카드 안에서 가능한 영역만큼 이미지 확장시킴 */
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      /* 사진 전체 나오게 */
-      /* background-color: white; */
-    }
+  .post_box img {
+    flex-grow: 1;
+    /* 카드 안에서 가능한 영역만큼 이미지 확장시킴 */
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* 사진 전체 나오게 */
+    /* background-color: white; */
+  }
 
-    .content {
-      flex-shrink: 0;
-      /* 텍스트 영역은 줄어들지 않음 */
-      padding: 10px;
-      min-height: 80px;
-    }
+  .content {
+    flex-shrink: 0;
+    /* 텍스트 영역은 줄어들지 않음 */
+    padding: 10px;
+    min-height: 80px;
+  }
 
-    .content h3 {
-      margin: 0 0 10px;
-      font-size: 18px;
-    }
+  .content h3 {
+    margin: 0 0 10px;
+    font-size: 18px;
+  }
 
-    .content p {
-      font-size: 14px;
-      color: black;
-    }
+  .content p {
+    font-size: 14px;
+    color: black;
+  }
 
-    /* link section */
-    #links {
-      position: absolute;
-      bottom: 30px;
-      width: 100%;
-      text-align: center;
-      font-size: 1.2rem;
-    }
 
-    #links a {
-      color: gray;
-      margin: 0 15px;
-      text-decoration: none;
-      transition: 0.3s;
-    }
+  #comments {
+    display: none;
+    width: 800px;
+    margin: 50px auto;
+    opacity: 0;
+    transition: opacity 0.8s;
+  }
 
-    #links a:hover {
-      color: black;
-    }
-  </style>
-</head>
+  #comments .inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    color: #fff;
+  }
+
+  #comments input,
+  #comments textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+  }
+
+  #comments button {
+    width: 100px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #116b9f;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .showing {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .comment_box {
+    background: #222;
+    padding: 15px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .comment_item {
+    width: 70%;
+  }
+
+  .button button {
+    background: #c3220f;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px 10px;
+  }
+
+
+
+  /* link section */
+  #links {
+    position: fixed;
+    bottom: 30px;
+    /* width: 100%; */
+    text-align: center;
+    font-size: 1.2rem;
+  }
+
+  #links a {
+    color: rgb(24, 11, 11);
+    margin: 0 15px;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+
+  #links a:hover {
+    color: rgb(46, 9, 9);
+  }
+</style>
 
 <body>
   <!-- loading_screen -->
@@ -455,7 +632,7 @@
       <div class="post_content">
         <img src="../res/shy_asset/hb4.jpg" alt="game">
         <div class="post_text">
-          <h3>게임</h3>
+          <h3>인생 게임</h3>
           <p>Cyberpunk 2077</p>
         </div>
       </div>
@@ -470,9 +647,24 @@
         </div>
       </div>
     </div>
+  </div>
 
+  <div id="comments" style="display:none; width:900px; margin:50px auto;">
+    <div class="inputs">
+      <div class="inputBox">
+        <em>이름 : </em>
+        <input type="text" id="name" placeholder="이름">
+      </div>
+      <div class="inputBox">
+        <em>내용 : </em>
+        <textarea id="content" placeholder="내용을 입력하세요"></textarea>
+      </div>
+      <button type="button" id="createBtn">작성</button>
+    </div>
+    <div class="showing"></div>
   </div>
-  </div>
+
+
 
   <!-- 깃허브 / Velog 링크 -->
   <div id="links">
@@ -480,11 +672,14 @@
     <a href="https://velog.io/@shy9729/posts" target="_blank">Velog</a>
   </div>
 
-  
+
   <script>
-    const bar = document.getElementById("bar");
-    const loading = document.getElementById("loading");
-    const about = document.getElementById("about");
+    const commentsSection = document.getElementById("comments");
+    const showing = commentsSection.querySelector(".showing");
+    const createBtn = document.getElementById("createBtn");
+    const nameInput = document.getElementById("name");
+    const contentInput = document.getElementById("content");
+
 
     let width = 0;
     const interval = setInterval(() => {
@@ -509,15 +704,26 @@
     function showSlide(index) {
       slides.forEach((s, i) => {
         s.classList.remove('active');
-        if (i === index) s.classList.add('active');
+        // if (i === index) s.classList.add('active');
+        slides[index].classList.add("active");
       });
     }
 
     // mouse wheel
     // let scrolling = false;
 
-    window.addEventListener('wheel', (e) => {
+    window.addEventListener('wheel', async (e) => {
       if (scrolling) return;
+
+      // 마지막 슬라이드일 때 방명록 표시
+      if (currentSlide === slides.length - 1 && e.deltaY > 0) {
+        scrolling = true;
+        await loadComments(); // 방명록 최신순 불러오기
+        comments.style.display = "block";
+        setTimeout(() => comments.style.opacity = 1, 100); // fade-in
+        scrolling = false;
+        return; // 더 이상 슬라이드 이동 안함
+      }
 
       if (e.deltaY > 0 && currentSlide < slides.length - 1) {
         scrolling = true;

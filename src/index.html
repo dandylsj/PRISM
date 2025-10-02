@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="kor">
+
 <head>
     <meta charset="UTF-8">
     <title>PRISM</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css" />
+
     <script type="module">
         // Firebase SDK 라이브러리 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc, serverTimestamp, query, orderBy, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        
+
         // Firebase 구성 정보 설정. JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
             apiKey: "AIzaSyA-m6D6FvQXAUcTMeNwXSqQjCFn9T9N3C0",
@@ -23,18 +25,84 @@
             appId: "1:215849547825:web:8b967e108e738d1d10bd10",
             measurementId: "G-7J07E75R0B"
         }
-        
+
         // Firebase 인스턴스 초기화
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+
+
+        // 입력 요소 선택
+        const nameInput = document.querySelector("#name");
+        const contentInput = document.querySelector("textarea");
+        const createBtn = document.querySelector(".create");
+
+        // 댓글 등록 기능
+        createBtn.addEventListener("click", async () => {
+            const name = nameInput.value.trim();
+            const content = contentInput.value.trim();
+
+            if (!name || !content) {
+                alert("이름과 내용을 입력하세요.");
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, "comments"), {
+                    name,
+                    content,
+                    createdAt: new Date()
+                });
+
+                alert("댓글이 등록되었습니다!");
+                location.reload();  // 화면 새로고침
+            } catch (error) {
+                console.error("댓글 등록 실패:", error);
+                alert("댓글 등록에 실패했습니다.");
+            }
+        });
+
+        // 🔹 댓글 불러오기(Read)
+        async function loadComments() {
+            showing.innerHTML = ""; // 기존 댓글 초기화
+
+            const commentsCol = collection(db, "comments");
+            const commentsQuery = query(commentsCol, orderBy("createdAt", "desc"));
+            const querySnapshot = await getDocs(commentsQuery);
+
+            querySnapshot.forEach(docSnap => {
+                const data = docSnap.data();
+                const commentBox = document.createElement("div");
+                commentBox.classList.add("comment_box");
+
+                commentBox.innerHTML = `
+      <div class="comment_item">
+        <p class="name">${data.name}</p>
+        <em class="date">${data.createdAt.toDate().toLocaleString()}</em>
+        <p class="content">${data.content}</p>
+      </div>
+      <div class="button">
+        <button class="modify" type="button">수정</button>
+        <button class="delete" type="button">삭제</button>
+      </div>
+    `;
+
+                showing.appendChild(commentBox);
+            });
+        }
+
+        // 페이지 로드 시 댓글 불러오기
+        loadComments();
+
+
     </script>
 </head>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" sizes="64x64" href="res/prism_favicon_64.png">
 <link rel="stylesheet" href="res/reset.css">
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
-    
+
     * {
         font-family: "Gowun Dodum", sans-serif;
         font-weight: 400;
@@ -42,97 +110,127 @@
     }
 </style>
 <style>
-    body{
-        background-color:#111;
-        color:#fff;
-        font-family: 'NanumSquareRound', 'NanumSquare', 'Noto Sans KR', sans-serif,'Poppins', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        font-size:15px;
+    body {
+        background-color: #111;
+        color: #fff;
+        font-family: 'NanumSquareRound', 'NanumSquare', 'Noto Sans KR', sans-serif, 'Poppins', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 15px;
     }
-    p{margin:0;}
+
+    p {
+        margin: 0;
+    }
+
     .passion {
-        background-color: #c3220f; /* 톤 다운 레드 → 뜨겁지만 차분한 열정 */
+        background-color: #c3220f;
+        /* 톤 다운 레드 → 뜨겁지만 차분한 열정 */
     }
+
     .responsibility {
-        background-color: #116b9f; /* 청량하면서 깊은 블루 → 책임감, 신뢰 */
+        background-color: #116b9f;
+        /* 청량하면서 깊은 블루 → 책임감, 신뢰 */
     }
+
     .innovation {
-        background-color: #ffc71f; /* 오렌지 톤 다운 → 창의성, 에너지 */
+        background-color: #ffc71f;
+        /* 오렌지 톤 다운 → 창의성, 에너지 */
     }
+
     .synergy {
-        background-color: #57c714; /* 올리브 그린 → 조화, 균형, 성장 */
+        background-color: #57c714;
+        /* 올리브 그린 → 조화, 균형, 성장 */
     }
+
     .mastery {
-        background-color: #492aa1; /* 다크 퍼플 → 전문성, 깊이, 장인정신 */
+        background-color: #492aa1;
+        /* 다크 퍼플 → 전문성, 깊이, 장인정신 */
     }
-    section{
-        margin-bottom:50px;
+
+    section {
+        margin-bottom: 50px;
     }
-    .main_box{
-        width:900px;
-        margin:0 auto;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        flex-direction:row;
-        flex-wrap:wrap;
-        flex-flow:wrap-reverse;
-        gap:50px;
+
+    .main_box {
+        width: 900px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        flex-flow: wrap-reverse;
+        gap: 50px;
     }
-    .main_box .box_item{
-        width:250px;
-        text-align:center;
-        color:#fff;
+
+    .main_box .box_item {
+        width: 250px;
+        text-align: center;
+        color: #fff;
     }
+
     .main_box .box_item .circle {
         width: 250px;
         height: 250px;
         border-radius: 50%;
         overflow: hidden;
         position: relative;
-        
+
         /* 안쪽 그림자와 바깥 그림자 모두 */
     }
-    .main_box .box_item .circle.mastery{
-        box-shadow: inset -8px -8px 15px rgba(255,255,255,0.3),
-        inset 8px 8px 20px rgba(0,0,0,0.5),
-        0 8px 20px rgba(73, 42, 161, 1);
+
+    .main_box .box_item .circle.mastery {
+        box-shadow: inset -8px -8px 15px rgba(255, 255, 255, 0.3),
+            inset 8px 8px 20px rgba(0, 0, 0, 0.5),
+            0 8px 20px rgba(73, 42, 161, 1);
     }
-    .main_box .box_item .circle.synergy{
-        box-shadow: inset -8px -8px 15px rgba(255,255,255,0.3),
-        inset 8px 8px 20px rgba(0,0,0,0.5),
-        0 8px 20px rgba(87, 199, 20, 1);
+
+    .main_box .box_item .circle.synergy {
+        box-shadow: inset -8px -8px 15px rgba(255, 255, 255, 0.3),
+            inset 8px 8px 20px rgba(0, 0, 0, 0.5),
+            0 8px 20px rgba(87, 199, 20, 1);
     }
-    .main_box .box_item .circle.passion{
-        box-shadow: inset -8px -8px 15px rgba(255,255,255,0.3),
-        inset 8px 8px 20px rgba(0,0,0,0.5),
-        0 8px 20px rgba(195,34,15, 1);
+
+    .main_box .box_item .circle.passion {
+        box-shadow: inset -8px -8px 15px rgba(255, 255, 255, 0.3),
+            inset 8px 8px 20px rgba(0, 0, 0, 0.5),
+            0 8px 20px rgba(195, 34, 15, 1);
     }
-    .main_box .box_item .circle.responsibility{
-        box-shadow: inset -8px -8px 15px rgba(255,255,255,0.3),
-        inset 8px 8px 20px rgba(0,0,0,0.5),
-        0 8px 20px rgba(17,107,159, 1);
+
+    .main_box .box_item .circle.responsibility {
+        box-shadow: inset -8px -8px 15px rgba(255, 255, 255, 0.3),
+            inset 8px 8px 20px rgba(0, 0, 0, 0.5),
+            0 8px 20px rgba(17, 107, 159, 1);
     }
-    
-    .main_box .box_item .circle.innovation{
-        box-shadow: inset -8px -8px 15px rgba(255,255,255,0.3),
-        inset 8px 8px 20px rgba(0,0,0,0.5),
-        0 8px 20px rgba(255,199,31, 1);
+
+    .main_box .box_item .circle.innovation {
+        box-shadow: inset -8px -8px 15px rgba(255, 255, 255, 0.3),
+            inset 8px 8px 20px rgba(0, 0, 0, 0.5),
+            0 8px 20px rgba(255, 199, 31, 1);
     }
-    .main_box .box_item .circle img{
-        opacity:0;
-        width:100%;
-        height:100%;
-        object-fit:cover;
+
+    .main_box .box_item .circle img {
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
-    .main_box .box_item .circle:hover{
-        cursor:pointer;
+
+    .main_box .box_item .circle:hover {
+        cursor: pointer;
     }
-    .main_box .box_item .circle:hover img{
+
+    .main_box .box_item .circle:hover img {
         transition: all 0.5s ease-in-out;
-        opacity:1;
+        opacity: 1;
     }
+
     /* 윗부분 하이라이트 (유리 반짝임) */
-    .main_box .box_item .circle:hover::before,.main_box .box_item .circle:hover::after{content:none;transition:none;}
+    .main_box .box_item .circle:hover::before,
+    .main_box .box_item .circle:hover::after {
+        content: none;
+        transition: none;
+    }
+
     .main_box .box_item .circle::before {
         content: "";
         position: absolute;
@@ -142,13 +240,13 @@
         height: 35%;
         border-radius: 50%;
         background: radial-gradient(circle at top left,
-        rgba(255,255,255,0.7),
-        rgba(255,255,255,0.2) 70%,
-        transparent 100%);
+                rgba(255, 255, 255, 0.7),
+                rgba(255, 255, 255, 0.2) 70%,
+                transparent 100%);
         filter: blur(4px);
         pointer-events: none;
     }
-    
+
     /* 아랫부분 반사광 */
     .main_box .box_item .circle::after {
         content: "";
@@ -159,29 +257,33 @@
         height: 20%;
         border-radius: 50%;
         background: radial-gradient(circle at bottom right,
-        rgba(255,255,255,0.3),
-        transparent 80%);
+                rgba(255, 255, 255, 0.3),
+                transparent 80%);
         filter: blur(3px);
         pointer-events: none;
     }
-    .box_item .name{
-        margin-top:20px;
-        font-size:20px;
-        font-weight:600;
+
+    .box_item .name {
+        margin-top: 20px;
+        font-size: 20px;
+        font-weight: 600;
     }
-    .box_item .symbol{
-         font-family: Helvetica, Arial, sans-serif;
-         font-size:20px;
+
+    .box_item .symbol {
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 20px;
     }
-    header .logo{
-        width:100%;
-        height:auto;
+
+    header .logo {
+        width: 100%;
+        height: auto;
     }
-    header .logo img{
-        width:25%;
-        display:block;
-        height:auto;
-        margin:0 auto;
+
+    header .logo img {
+        width: 25%;
+        display: block;
+        height: auto;
+        margin: 0 auto;
     }
 </style>
 
@@ -198,7 +300,8 @@
                     passion
                 </div>
                 <div class="circle passion">
-                    <img src="https://img.notionusercontent.com/s3/prod-files-secure%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2Fcf5fa64a-9286-4de4-934b-b35895209c0a%2FKakaoTalk_20250929_095016250.jpg/size/w=2000?exp=1759316321&sig=p4UZFVYHxgKZzucMZ8cBiAxvz897dfawZBAxGegwgCc&id=27e2dc3e-f514-80de-8ecf-dcef79ef2c05&table=block&userId=d4dfa77e-a5bd-4327-ac3e-f0d19a8ba145" alt="">
+                    <img src="https://img.notionusercontent.com/s3/prod-files-secure%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2Fcf5fa64a-9286-4de4-934b-b35895209c0a%2FKakaoTalk_20250929_095016250.jpg/size/w=2000?exp=1759316321&sig=p4UZFVYHxgKZzucMZ8cBiAxvz897dfawZBAxGegwgCc&id=27e2dc3e-f514-80de-8ecf-dcef79ef2c05&table=block&userId=d4dfa77e-a5bd-4327-ac3e-f0d19a8ba145"
+                        alt="">
                 </div>
                 <p class="name">이세진</p>
             </a>
@@ -240,6 +343,8 @@
             </a>
         </div>
     </section>
+
+
     <div class="comments">
         <div class="inputs">
             <div class="inputBox">
@@ -250,9 +355,11 @@
                 <em>내용을 입력하세요 </em>
                 <textarea name="content" id=""></textarea>
             </div>
-            <button type="button" class="create" >작성</button>
+            <button type="button" class="create">작성</button>
         </div>
+
         <div class="showing">
+
             <div class="comment_box">
                 <div class="comment_item">
                     <p class="name">작성자</p>
@@ -264,17 +371,20 @@
                     <button class="delete" type="button">삭제</button>
                 </div>
             </div>
+
             <div class="comment_box">
                 <div class="comment_item">
                     <p class="name">작성자</p>
                     <em class="date">2025-10-02</em>
-                    <p class="content">댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용</p>
+                    <p class="content">댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글
+                        내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용</p>
                 </div>
                 <div class="button">
                     <button class="modify" type="button">수정</button>
                     <button class="delete" type="button">삭제</button>
                 </div>
             </div>
+
             <div class="comment_box">
                 <div class="comment_item">
                     <p class="name">작성자</p>
@@ -286,105 +396,121 @@
                     <button class="delete" type="button">삭제</button>
                 </div>
             </div>
+
         </div>
     </div>
 </body>
+
 <style>
-    .comments{
-        width:900px;
-        height:auto;
-        margin:0 auto;
+    .comments {
+        width: 900px;
+        height: auto;
+        margin: 0 auto;
     }
-    .comments .inputs{
-        width:100%;
-        height:auto;
-        display:flex;
-        flex-direction:column;
-        justify-content:flex-start;
-        align-items:flex-start;
-        gap:10px;
-        margin-bottom:20px;
-        color:#000;
+
+    .comments .inputs {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 20px;
+        color: #000;
     }
-        .comments .inputs input, textarea{
-            color:#111;
-        }
-        .comments .inputs .inputBox{
-        width:100%;
-        color:#fff;
-        }
-    .comments .inputs textarea{
-        width:100%;
-        height:100px;
-        resize:none;
-        border:1px solid #ccc;
-        border-radius:5px;
-        padding:10px;
-        font-size:14px;
-        overflow:hidden;
+
+    .comments .inputs input,
+    textarea {
+        color: #111;
+    }
+
+    .comments .inputs .inputBox {
+        width: 100%;
+        color: #fff;
+    }
+
+    .comments .inputs textarea {
+        width: 100%;
+        height: 100px;
+        resize: none;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 14px;
+        overflow: hidden;
 
     }
-        .comments .inputs button{
-        width:100px;
-        height:40px;    
-        border:none;
-        border-radius:5px;
-        background-color:#116b9f;
-        color:#fff;
-        }
-    .showing{
-        width:100%;
-        display:flex;
-        flex-direction:column;
-        justify-content:flex-start;
-        align-items:flex-start;
-        gap:10px;
+
+    .comments .inputs button {
+        width: 100px;
+        height: 40px;
+        border: none;
+        border-radius: 5px;
+        background-color: #116b9f;
+        color: #fff;
     }
-    .showing .comment_box{
-        width:100%;
-        height:auto;
-        background-color:#222;
-        border-radius:5px;
-        padding:10px;
-        display:flex;
-        flex-direction:row;
-        justify-content:space-between;
-        align-items:center;
-        gap:100px;
-        padding:20px;
+
+    .showing {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 10px;
     }
-    .showing .comment_box .comment_item{
-        width:70%;
-        height:auto;
-        display:flex;
-        flex-direction:column;
-        justify-content:flex-start;
-        align-items:flex-start;
-        gap:10px;
+
+    .showing .comment_box {
+        width: 100%;
+        height: auto;
+        background-color: #222;
+        border-radius: 5px;
+        padding: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 100px;
+        padding: 20px;
     }
-    .showing .comment_box .button{
-        width:25%;
-        min-width:130px;
-        display:flex;
-        flex-direction:row;
-        justify-content:flex-end;
-        align-items:center;
+
+    .showing .comment_box .comment_item {
+        width: 70%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 10px;
     }
-    .showing .comment_box .button button{
-        min-width:60px;
-        height:30px;
-        border:none;
-        border-radius:5px;
-        background-color:#116b9f;
-        color:#fff;
-        margin-left:10px;
+
+    .showing .comment_box .button {
+        width: 25%;
+        min-width: 130px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .showing .comment_box .button button {
+        min-width: 60px;
+        height: 30px;
+        border: none;
+        border-radius: 5px;
+        background-color: #116b9f;
+        color: #fff;
+        margin-left: 10px;
     }
 </style>
+
 <script>
-    document.querySelectorAll(".symbol").forEach((el)=>{
+    document.querySelectorAll(".symbol").forEach((el) => {
         el.innerText.toUpperCase();
-        el.innerText=el.innerText.toUpperCase();
+        el.innerText = el.innerText.toUpperCase();
     });
-    
+
 </script>
+
+
 </html>
