@@ -31,6 +31,7 @@
 </head>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" sizes="64x64" href="./src/prism_favicon_64.png">
+<link rel="stylesheet" href="./src/reset.css">
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
     
@@ -38,91 +39,6 @@
         font-family: "Gowun Dodum", sans-serif;
         font-weight: 400;
         font-style: normal;
-    }
-</style>
-<style>
-    /* ===== reset.css — modern minimal reset ===== */
-    
-    /* 1) 박스모델 일원화 */
-    *, *::before, *::after {
-        box-sizing: border-box;
-    }
-    
-    /* 2) 기본 여백 제거 */
-    * {
-        margin: 0;
-        padding: 0;
-    }
-    
-    /* 3) 문서 기본값 정리 */
-    html:focus-within {
-        scroll-behavior: smooth;
-    }
-    html, body {
-        height: 100%;
-    }
-    :root {
-        --font-kr: 'NanumSquare', 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
-    }
-    body {
-        line-height: 1.5;
-        -webkit-font-smoothing: antialiased; /* 크롬/사파리 부드러운 렌더링 */
-        text-rendering: optimizeLegibility;
-        font-family: var(--font-kr);
-    }
-    
-    /* 4) 미디어 요소 기본값 */
-    img, picture, video, canvas, svg {
-        display: block;
-        max-width: 100%;
-    }
-    
-    /* 5) 폰트 상속 (폼 컨트롤 포함) */
-    input, button, textarea, select {
-        font: inherit;
-        color: inherit;
-    }
-    
-    /* 6) 리스트/링크 기본 스타일 제거(필요 최소) */
-    ul, ol {
-        list-style: none;
-    }
-    a {
-        color: inherit;
-        text-decoration: none;
-    }
-    
-    /* 7) 테이블 초기화 */
-    table {
-        border-collapse: collapse;
-        border-spacing: 0;
-    }
-    
-    /* 8) 버튼 기본 초기화(접근성 유지) */
-    button {
-        background: none;
-        border: 0;
-        cursor: pointer;
-    }
-    
-    /* 9) 폼 요소 기본 여백/보더 정리 */
-    fieldset {
-        border: 0;
-        margin: 0;
-        padding: 0;
-    }
-    textarea {
-        resize: vertical; /* 자유롭게 하고 싶으면 both */
-    }
-    *a{text-decoration:none;  color: inherit; /* 글자색도 부모 색상 따라가도록 */}
-    /* 10) 강제 애니메이션 감소 대응 */
-    @media (prefers-reduced-motion: reduce) {
-        *, *::before, *::after {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0.01ms !important;
-            scroll-behavior: auto !important;
-        }
     }
 </style>
 <style>
@@ -147,6 +63,9 @@
     }
     .mastery {
         background-color: #492aa1; /* 다크 퍼플 → 전문성, 깊이, 장인정신 */
+    }
+    section{
+        margin-bottom:50px;
     }
     .main_box{
         width:900px;
@@ -274,12 +193,12 @@
     </header>
     <section>
         <div class="main_box">
-            <a href="member/sejin.html" class="box_item">
+            <a href="member/seejin.html" class="box_item">
                 <div class="symbol">
                     passion
                 </div>
                 <div class="circle passion">
-                    <img src="./src/img_01.png" alt="">
+                    <img src="https://img.notionusercontent.com/s3/prod-files-secure%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2Fcf5fa64a-9286-4de4-934b-b35895209c0a%2FKakaoTalk_20250929_095016250.jpg/size/w=2000?exp=1759316321&sig=p4UZFVYHxgKZzucMZ8cBiAxvz897dfawZBAxGegwgCc&id=27e2dc3e-f514-80de-8ecf-dcef79ef2c05&table=block&userId=d4dfa77e-a5bd-4327-ac3e-f0d19a8ba145" alt="">
                 </div>
                 <p class="name">이세진</p>
             </a>
@@ -288,11 +207,11 @@
                     responsibility
                 </div>
                 <div class="circle responsibility">
-                    <img src="./src/img_01.png" alt="">
+                    <img src="./src/minyung.png" alt="">
                 </div>
                 <p class="name">원민영</p>
             </a>
-            <a href="../member/sejin.html" class="box_item">
+            <a href="../member/junbeum.html" class="box_item">
                 <div class="symbol">
                     innovation
                 </div>
@@ -310,7 +229,7 @@
                 </div>
                 <p class="name">최정윤</p>
             </a>
-            <a href="../member/sejin.html" class="box_item">
+            <a href="../member/seejin.html" class="box_item">
                 <div class="symbol">
                     mastery
                 </div>
